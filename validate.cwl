@@ -39,8 +39,8 @@ requirements:
           status = "VALIDATED"
           if not message.startswith("test"):
             invalidReasons.append("Submission must have test column")
-            status = "INVALID"
-          result = {'invalidReasons':"\n".join(invalidReasons),'status':status}
+            predictionFileStatus = "INVALID"
+          result = {'predictionFileErrors':"\n".join(invalidReasons),'predictionFileStatus':status}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
      
@@ -56,11 +56,11 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['status'])
+      outputEval: $(JSON.parse(self[0].contents)['predictionFileStatus'])
 
   - id: invalidReasons
     type: string
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['invalidReasons'])
+      outputEval: $(JSON.parse(self[0].contents)['predictionFileErrors'])

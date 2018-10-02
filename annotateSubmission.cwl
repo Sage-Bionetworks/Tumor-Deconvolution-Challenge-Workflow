@@ -100,8 +100,6 @@ requirements:
             status = syn.getSubmissionStatus(args.submissionId)
             with open(args.annotationValues) as json_data:
               annots = json.load(json_data)
-            status.status = annots['status']
-            del annots['status']
             status = update_single_submission_status(status, annots, force=args.private)
             status = syn.store(status)
      

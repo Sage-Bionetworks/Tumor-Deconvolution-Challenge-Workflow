@@ -39,12 +39,12 @@ requirements:
 
           args = parser.parse_args()
           if args.status == "VALIDATED":
-            status = "SCORED"
+            predictionFileStatus = "SCORED"
             score = 3
           else:
-            status = args.status
+            predictionFileStatus = args.status
             score = -1
-          result = {'score':score,'status':status}
+          result = {'score':score,'predictionFileStatus':predictionFileStatus}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
      
