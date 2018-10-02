@@ -36,11 +36,11 @@ requirements:
           with open(args.submissionFile,"r") as subFile:
             message = subFile.read()
           invalidReasons = []
-          status = "VALIDATED"
+          predictionFileStatus = "VALIDATED"
           if not message.startswith("test"):
             invalidReasons.append("Submission must have test column")
             predictionFileStatus = "INVALID"
-          result = {'predictionFileErrors':"\n".join(invalidReasons),'predictionFileStatus':status}
+          result = {'predictionFileErrors':"\n".join(invalidReasons),'predictionFileStatus':predictionFileStatus}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
      
