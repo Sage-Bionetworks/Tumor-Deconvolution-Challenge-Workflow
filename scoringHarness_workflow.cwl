@@ -87,6 +87,17 @@ steps:
     out:
       - id: results
       
+  scoreEmail:
+    run: scoreEmail.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: synapseConfig
+        source: "#synapseConfig"
+      - id: results
+        source: "#scoring/results"
+    out: []
+
   annotateSubmissionWithOutput:
     run: annotateSubmission.cwl
     in:
