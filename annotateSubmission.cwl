@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 #
-# annotate an existing submission with a string value
+# Annotate an existing submission with a string value
 # (variations can be written to pass long or float values)
 #
 cwlVersion: v1.0

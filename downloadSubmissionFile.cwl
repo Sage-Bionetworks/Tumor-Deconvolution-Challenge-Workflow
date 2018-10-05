@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 #
-# download a submitted file from Synapse and return the downloaded file
+# Download a submitted file from Synapse and return the downloaded file
 #
 cwlVersion: v1.0
 class: CommandLineTool

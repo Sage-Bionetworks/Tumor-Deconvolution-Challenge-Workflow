@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 #
-# Sends emails to participants
+# Example score emails to participants
 #
 cwlVersion: v1.0
 class: CommandLineTool

@@ -1,6 +1,6 @@
 #!/usr/bin/env cwl-runner
 #
-# download a submitted file from Synapse and return the downloaded file
+# Extract the submitted Docker repository and Docker digest
 #
 cwlVersion: v1.0
 class: CommandLineTool
