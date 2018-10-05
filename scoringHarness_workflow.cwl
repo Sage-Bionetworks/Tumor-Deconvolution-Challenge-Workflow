@@ -50,6 +50,20 @@ steps:
       - id: status
       - id: invalidReasons
   
+  validationEmail:
+    run: validationEmail.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: synapseConfig
+        source: "#synapseConfig"
+      - id: status
+        source: "#validation/status"
+      - id: invalidReasons
+        source: "#validation/invalidReasons"
+
+    out: []
+
   annotateValidationWithOutput:
     run: annotateSubmission.cwl
     in:
