@@ -1,0 +1,5 @@
+cell_type,sample1,sample2,sample3
+tcells,0.49,0.4,0.01
+bcells,0.31,0.37,0.49
+monocytes,0,0.03,0.3
+macrophages,0.2,0.2,0.2
