@@ -80,7 +80,7 @@ requirements:
 
           resp = requests.get(dockerRequestURL, headers={'Authorization': 'Bearer %s' % token})
           invalidReasons = []
-          status = "OPEN"
+          status = "VALIDATED"
           if resp.status_code != 200:
             invalidReasons.append("Docker image + sha digest must exist.  You submitted %s@%s" % (args.dockerRepository,args.dockerDigest))
             status = "INVALID"
@@ -92,7 +92,7 @@ requirements:
             invalidReasons.append("Docker container must be less than a teribyte")
             status = "INVALID"
 
-          result = {'invalidReasons':"\n".join(invalidReasons),'status':status}
+          result = {'dockerImageErrors':"\n".join(invalidReasons),'dockerImageStatus':status}
           with open(args.results, 'w') as o:
             o.write(json.dumps(result))
 
@@ -108,11 +108,11 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['status'])
+      outputEval: $(JSON.parse(self[0].contents)['dockerImageStatus'])
 
   - id: invalidReasons
     type: string
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['invalidReasons'])
+      outputEval: $(JSON.parse(self[0].contents)['dockerImageErrors'])

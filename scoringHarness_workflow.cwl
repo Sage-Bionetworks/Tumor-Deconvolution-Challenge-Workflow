@@ -72,8 +72,10 @@ steps:
         source: "#submissionId"
       - id: annotationValues
         source: "#validation/results"
-      - id: private
-        valueFrom: "false"
+      - id: toPublic
+        valueFrom: "true"
+      - id: forceChangeStatAcl
+        valueFrom: "true"
       - id: synapseConfig
         source: "#synapseConfig"
     out: []
@@ -106,8 +108,10 @@ steps:
         source: "#submissionId"
       - id: annotationValues
         source: "#scoring/results"
-      - id: private
-        valueFrom: "false"
+      - id: toPublic
+        valueFrom: "true"
+      - id: forceChangeStatAcl
+        valueFrom: "true"
       - id: synapseConfig
         source: "#synapseConfig"
     out: []

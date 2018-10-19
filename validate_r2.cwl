@@ -13,7 +13,7 @@ requirements:
 
 inputs:
 
-  input_file:
+  inputfile:
     type: File
     inputBinding:
       position: 1

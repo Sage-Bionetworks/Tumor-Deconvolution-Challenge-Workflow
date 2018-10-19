@@ -59,7 +59,7 @@ requirements:
             syn.login()
             file=synapseclient.File(path=args.infile, parent=args.parentId)
             file = syn.store(file, used={'reference':{'targetId':args.usedEntityId, 'targetVersionNumber':args.usedEntityVersion}}, executed=args.executedEntity)
-            results = {'uploadedFileId':file.id,'uploadedFileVersion':file.versionNumber}
+            results = {'predictionFileId':file.id,'predictionFileVersion':file.versionNumber}
             with open(args.results, 'w') as o:
               o.write(json.dumps(results))
      
@@ -69,12 +69,16 @@ outputs:
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['uploadedFileId'])
+      outputEval: $(JSON.parse(self[0].contents)['predictionFileId'])
+  
   - id: uploadedFileVersion
     type: int
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['uploadedFileVersion'])
-
-
+      outputEval: $(JSON.parse(self[0].contents)['predictionFileVersion'])
+  
+  - id: results
+    type: File
+    outputBinding:
+      glob: results.json   

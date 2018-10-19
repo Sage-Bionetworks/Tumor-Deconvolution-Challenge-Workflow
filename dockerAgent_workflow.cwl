@@ -41,7 +41,7 @@ steps:
       - id: dockerDigest
       - id: entityId
       
-  validation:
+  validateDocker:
     run: validateDocker.cwl
     in:
       - id: dockerRepository
@@ -55,18 +55,20 @@ steps:
       - id: status
       - id: invalidReasons
 
-#  annotateValidationWithOutput:
-#    run: annotateSubmission.cwl
-#    in:
-#      - id: submissionId
-#        source: "#submissionId"
-#      - id: annotationValues
-#        source: "#validation/results"
-#      - id: private
-#        valueFrom: "false"
-#      - id: synapseConfig
-#        source: "#synapseConfig"
-#    out: []
+  annotateValidationDockerWithOutput:
+    run: annotateSubmission.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: annotationValues
+        source: "#validateDocker/results"
+      - id: toPublic
+        valueFrom: "true"
+      - id: forceChangeStatAcl
+        valueFrom: "true"
+      - id: synapseConfig
+        source: "#synapseConfig"
+    out: []
  
   getDockerConfig:
     run: getDockerConfig.cwl
@@ -90,6 +92,8 @@ steps:
         source: "#getDockerConfig/dockerRegistry"
       - id: dockerAuth
         source: "#getDockerConfig/dockerAuth"
+      - id: status
+        source: "#validateDocker/status"
     out:
       - id: predictions
 
@@ -109,3 +113,95 @@ steps:
     out:
       - id: uploadedFileId
       - id: uploadedFileVersion
+      - id: results
+
+  annotateDockerUploadResults:
+    run: annotateSubmission.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: annotationValues
+        source: "#uploadResults/results"
+      - id: toPublic
+        valueFrom: "true"
+      - id: forceChangeStatAcl
+        valueFrom: "true"
+      - id: synapseConfig
+        source: "#synapseConfig"
+    out: []
+
+  validation:
+    run: validate.cwl
+    in:
+      - id: inputfile
+        source: "#runDocker/predictions"
+    out:
+      - id: results
+      - id: status
+      - id: invalidReasons
+  
+  validationEmail:
+    run: validationEmail.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: synapseConfig
+        source: "#synapseConfig"
+      - id: status
+        source: "#validation/status"
+      - id: invalidReasons
+        source: "#validation/invalidReasons"
+
+    out: []
+
+  annotateValidationWithOutput:
+    run: annotateSubmission.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: annotationValues
+        source: "#validation/results"
+      - id: toPublic
+        valueFrom: "true"
+      - id: forceChangeStatAcl
+        valueFrom: "true"
+      - id: synapseConfig
+        source: "#synapseConfig"
+    out: []
+
+  scoring:
+    run: score.cwl
+    in:
+      - id: inputfile
+        source: "#runDocker/predictions"
+      - id: status 
+        source: "#validation/status"
+    out:
+      - id: results
+      
+  scoreEmail:
+    run: scoreEmail.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: synapseConfig
+        source: "#synapseConfig"
+      - id: results
+        source: "#scoring/results"
+    out: []
+
+  annotateSubmissionWithOutput:
+    run: annotateSubmission.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: annotationValues
+        source: "#scoring/results"
+      - id: toPublic
+        valueFrom: "true"
+      - id: forceChangeStatAcl
+        valueFrom: "true"
+      - id: synapseConfig
+        source: "#synapseConfig"
+    out: []
+ 
