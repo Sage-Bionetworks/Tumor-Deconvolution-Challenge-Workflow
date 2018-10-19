@@ -16,7 +16,7 @@ arguments:
   - valueFrom: $(inputs.status)
     prefix: --status
   #Docker run has access to the local file system, so this path is the input directory locally
-  - valueFrom: /home/aelamb/repos/Tumor-Deconvolution-Challenge-Workflow/example_files
+  - valueFrom: /home/ubuntu/Tumor-Deconvolution-Challenge-Workflow/input_file_directory/r2/
     prefix: -i
   #- valueFrom: /home/ubuntu
   #  prefix: -i
