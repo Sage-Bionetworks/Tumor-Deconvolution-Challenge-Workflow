@@ -6,7 +6,7 @@ baseCommand: [Rscript, /usr/local/bin/score.R]
 
 hints:
   DockerRequirement:
-    dockerPull: tumor_deconvolution_challenge
+    dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge
     
 requirements:
   - class: InlineJavascriptRequirement
