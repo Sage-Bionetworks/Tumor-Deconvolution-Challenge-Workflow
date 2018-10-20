@@ -24,7 +24,7 @@ inputs:
       position: 2
     default:
       class: File
-      location: example_files/validation_rd2.csv
+      location: r2/gold_standard.csv
 
   json_file:
     type: string
