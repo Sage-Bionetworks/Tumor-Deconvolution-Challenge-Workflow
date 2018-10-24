@@ -8,10 +8,12 @@ baseCommand: python
 inputs:
   - id: synapseConfig
     type: File
+  - id: synapseId
+    type: string
 
 arguments:
   - valueFrom: downloadSynapseFile.py
-  - valueFrom: syn17015321
+  - valueFrom: $(inputs.synapseId)
     prefix: -s
   - valueFrom: $(inputs.synapseConfig.path)
     prefix: -c
@@ -33,10 +35,11 @@ requirements:
           syn = synapseclient.Synapse(configPath=args.synapseConfig)
           syn.login()
           sub = syn.get(args.submissionId, downloadLocation=".")
+          os.rename(sub.path, "gold_standard.csv")
      
 outputs:
   - id: filePath
     type: File
     outputBinding:
-      glob: gold_standard_r1.csv
+      glob: gold_standard.csv
 

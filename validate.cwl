@@ -1,66 +1,51 @@
 #!/usr/bin/env cwl-runner
-#
-# Example validate submission file
-#
+
 cwlVersion: v1.0
 class: CommandLineTool
-baseCommand: python
+baseCommand: [Rscript, /usr/local/bin/validate.R]
 
-inputs:
-  - id: inputfile
-    type: File
-
-arguments:
-  - valueFrom: validate.py
-  - valueFrom: $(inputs.inputfile)
-    prefix: -s
-  - valueFrom: results.json
-    prefix: -r
-
+hints:
+  DockerRequirement:
+    dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge
+    
 requirements:
   - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: validate.py
-        entry: |
-          #!/usr/bin/env python
-          import synapseclient
-          import argparse
-          import os
-          import json
-          parser = argparse.ArgumentParser()
-          parser.add_argument("-s", "--submissionFile", required=True, help="Submission File")
-          parser.add_argument("-r", "--results", required=True, help="validation results")
 
-          args = parser.parse_args()
-          with open(args.submissionFile,"r") as subFile:
-            message = subFile.read()
-          invalidReasons = []
-          predictionFileStatus = "VALIDATED"
-          if not message.startswith("test"):
-            invalidReasons.append("Submission must have test column")
-            predictionFileStatus = "INVALID"
-          result = {'predictionFileErrors':"\n".join(invalidReasons),'predictionFileStatus':predictionFileStatus}
-          with open(args.results, 'w') as o:
-            o.write(json.dumps(result))
-     
+inputs:
+
+  inputfile:
+    type: File
+    inputBinding:
+      position: 1
+  
+  validationFile:
+    type: File
+    inputBinding:
+      position: 2
+
+  jsonFile:
+    type: string
+    default: "results.json"
+    inputBinding:
+      position: 3
+
 outputs:
 
   - id: results
     type: File
     outputBinding:
-      glob: results.json   
-
+      glob: $(inputs.jsonFile)
+      
   - id: status
     type: string
     outputBinding:
-      glob: results.json
+      glob: $(inputs.jsonFile)
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['predictionFileStatus'])
 
   - id: invalidReasons
     type: string
     outputBinding:
-      glob: results.json
+      glob: $(inputs.jsonFile)
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['predictionFileErrors'])

@@ -31,10 +31,13 @@ outputs: []
 steps:
 
   downloadGoldStandard:
-    run: downloadGoldStandard_r1.cwl
+    run: downloadGoldStandard.cwl
     in:
       - id: synapseConfig
         source: "#synapseConfig"
+# change to real gold standard
+      - id: forceChangeStatAcl
+        valueFrom: syn17015321
     out:
       - id: filePath
 
@@ -140,7 +143,7 @@ steps:
     out: []
 
   validation:
-    run: validate_r1.cwl
+    run: validate.cwl
     in:
       - id: inputfile
         source: "#runDocker/predictions"
@@ -181,7 +184,7 @@ steps:
     out: []
 
   scoring:
-    run: score_r1.cwl
+    run: score.cwl
     in:
       - id: inputfile
         source: "#runDocker/predictions"
