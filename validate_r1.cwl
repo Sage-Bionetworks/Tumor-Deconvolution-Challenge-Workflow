@@ -24,7 +24,7 @@ inputs:
       position: 2
     default:
       class: File
-      location: /home/ubuntu/r1/gold_standard.csv
+      location: /home/ubuntu/temp/gold_standard.csv
 
   json_file:
     type: string
