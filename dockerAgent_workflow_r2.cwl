@@ -35,7 +35,7 @@ steps:
     in:
       - id: synapseConfig
         source: "#synapseConfig"
-      - id: forceChangeStatAcl
+      - id: synapseId
         #change:: valueFrom: syn17015321
     out:
       - id: filePath

@@ -36,7 +36,7 @@ steps:
       - id: synapseConfig
         source: "#synapseConfig"
 # change to real gold standard
-      - id: forceChangeStatAcl
+      - id: synapseId
         valueFrom: syn17015321
     out:
       - id: filePath
