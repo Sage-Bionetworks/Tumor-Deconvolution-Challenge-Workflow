@@ -41,6 +41,17 @@ steps:
     out:
       - id: filePath
 
+  notifyParticipants:
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/notificationEmail.cwl
+    in:
+      - id: submissionId
+        source: "#submissionId"
+      - id: synapseConfig
+        source: "#synapseConfig"
+      - id: parentId
+        source: "#submitterUploadSynId"
+    out: []
+
   getSubmissionDocker:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/getSubmissionDocker.cwl
     in:
