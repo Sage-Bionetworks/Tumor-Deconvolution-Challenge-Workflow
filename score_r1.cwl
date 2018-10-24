@@ -24,7 +24,7 @@ inputs:
       position: 2
     default:
       class: File
-      location: /home/ubuntu/temp_dir/gold_standard.csv
+      location: valueFrom: $(runtime.tmpdir)/gold_standard.csv
 
   json_file:
     type: string
