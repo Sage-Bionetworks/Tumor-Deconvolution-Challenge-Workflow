@@ -42,7 +42,7 @@ steps:
       - id: filePath
 
   getSubmissionDocker:
-    run: getSubmissionDocker.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/getSubmissionDocker.cwl
     in:
       - id: submissionId
         source: "#submissionId"
@@ -211,7 +211,7 @@ steps:
     out: []
 
   annotateSubmissionWithOutput:
-    run: annotateSubmission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/annotateSubmission.cwl
     in:
       - id: submissionId
         source: "#submissionId"
