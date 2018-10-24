@@ -54,7 +54,7 @@ steps:
       - id: entityId
       
   validateDocker:
-    run: validateDocker.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/validateDocker.cwl
     in:
       - id: dockerRepository
         source: "#getSubmissionDocker/dockerRepository"
@@ -68,7 +68,7 @@ steps:
       - id: invalidReasons
 
   annotateValidationDockerWithOutput:
-    run: annotateSubmission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/annotateSubmission.cwl
     in:
       - id: submissionId
         source: "#submissionId"
@@ -83,7 +83,7 @@ steps:
     out: []
  
   getDockerConfig:
-    run: getDockerConfig.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/getDockerConfig.cwl
     in:
       - id: synapseConfig
         source: "#synapseConfig"
@@ -114,7 +114,7 @@ steps:
      - id: predictions
 
   uploadResults:
-    run: uploadToSynapse.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/uploadToSynapse.cwl
     in:
       - id: infile
         source: "#runDocker/predictions"
@@ -132,7 +132,7 @@ steps:
       - id: results
 
   annotateDockerUploadResults:
-    run: annotateSubmission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/annotateSubmission.cwl
     in:
       - id: submissionId
         source: "#submissionId"
@@ -159,7 +159,7 @@ steps:
       - id: invalidReasons
   
   validationEmail:
-    run: validationEmail.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/validationEmail.cwl
     in:
       - id: submissionId
         source: "#submissionId"
@@ -173,7 +173,7 @@ steps:
     out: []
 
   annotateValidationWithOutput:
-    run: annotateSubmission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/annotateSubmission.cwl
     in:
       - id: submissionId
         source: "#submissionId"
@@ -200,7 +200,7 @@ steps:
       - id: results
       
   scoreEmail:
-    run: scoreEmail.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/master/scoreEmail.cwl
     in:
       - id: submissionId
         source: "#submissionId"
