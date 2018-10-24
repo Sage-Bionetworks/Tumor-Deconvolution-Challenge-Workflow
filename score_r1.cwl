@@ -24,7 +24,7 @@ inputs:
       position: 2
     default:
       class: File
-      location: valueFrom: $(runtime.tmpdir)/gold_standard.csv
+      location: $(runtime.tmpdir)/gold_standard.csv
 
   json_file:
     type: string
