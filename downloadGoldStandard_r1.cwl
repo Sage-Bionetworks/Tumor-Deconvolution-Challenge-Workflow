@@ -6,8 +6,6 @@ class: CommandLineTool
 baseCommand: python
 
 inputs:
-  - id: synapseId
-    type: int
   - id: synapseConfig
     type: File
 
@@ -35,12 +33,10 @@ requirements:
           syn = synapseclient.Synapse(configPath=args.synapseConfig)
           syn.login()
           sub = syn.get(args.submissionId, downloadLocation=".")
-          if sub.entity.entityType!='org.sagebionetworks.repo.model.FileEntity':
-            raise Exception('Expected FileEntity type but found '+sub.entity.entityType)
      
 outputs:
   - id: filePath
     type: File
     outputBinding:
-      glob: goldstandard_r1.csv
+      glob: gold_standard_r1.csv
 

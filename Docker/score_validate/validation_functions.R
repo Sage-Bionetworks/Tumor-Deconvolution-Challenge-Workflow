@@ -31,6 +31,11 @@ check_submission_file <- function(submission_file, validation_file){
     
     if(status$status == "INVALID") return(status)
     
+    status <- check_submission_file_has_cell_type_column(
+        status, submission_file)
+    
+    if(status$status == "INVALID") return(status)
+    
     submission_df <- readr::read_csv(submission_file)
     
     status <- check_submission_structure(status, validation_df, submission_df)
@@ -42,28 +47,6 @@ check_submission_file <- function(submission_file, validation_file){
     return(status)  
 }
 
-check_submission_values <- function(status, submission_df){
-    prediction_df <- submission_df %>% 
-        tidyr::gather(key = "sample", value = "prediction", -cell_type) %>% 
-        dplyr::mutate(prediction = as.numeric(prediction))
-    contains_na <- prediction_df %>% 
-        magrittr::use_series(prediction) %>% 
-        is.na() %>% 
-        any
-    contains_inf <- prediction_df %>% 
-        magrittr::use_series(prediction) %>% 
-        is.infinite() %>% 
-        any
-    if(contains_na) {
-        status$status = "INVALID"
-        status$reasons = "Submission_df missing numeric values" 
-    }
-    if(contains_inf) {
-        status$status = "INVALID"
-        status$reasons = c(status$reasons, "Submission_df missing numeric values")
-    }
-    return(status)
-}
 
 check_submission_file_readable <- function(status, submission_file){
     result <- try(readr::read_csv(submission_file), silent = TRUE)
@@ -76,7 +59,22 @@ check_submission_file_readable <- function(status, submission_file){
     }
 }
 
+check_submission_file_has_cell_type_column <- function(status, submission_file){
+    df <- readr::read_csv(submission_file)
+    first_header <- colnames(df)[[1]]
+    if(first_header == "cell_type"){
+        return(status)  
+    } else {
+        status$status = "INVALID"
+        status$reasons = stringr::str_c(
+            "1st column header of submission file is not cell_type: ",
+            first_header)
+        return(status)
+    }
+}
+
 check_submission_structure <- function(status, validation_df, submission_df){
+    
     submission_cell_types <- submission_df$cell_type
     validation_cell_types <- validation_df$cell_type
     submission_samples <- get_samples_from_df(submission_df)
@@ -121,6 +119,33 @@ check_submission_structure <- function(status, validation_df, submission_df){
     }
     return(status)
 }
+
+check_submission_values <- function(status, submission_df){
+    prediction_df <- submission_df %>% 
+        tidyr::gather(key = "sample", value = "prediction", -cell_type) %>% 
+        dplyr::mutate(prediction = as.numeric(prediction))
+    contains_na <- prediction_df %>% 
+        magrittr::use_series(prediction) %>% 
+        is.na() %>% 
+        any
+    contains_inf <- prediction_df %>% 
+        magrittr::use_series(prediction) %>% 
+        is.infinite() %>% 
+        any
+    if(contains_na) {
+        status$status = "INVALID"
+        status$reasons = "Submission_df missing numeric values" 
+    }
+    if(contains_inf) {
+        status$status = "INVALID"
+        status$reasons = c(status$reasons, "Submission_df missing numeric values")
+    }
+    return(status)
+}
+
+
+
+
 
 get_samples_from_df <- function(df){
     df %>% 

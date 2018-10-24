@@ -36,9 +36,9 @@ requirements:
           import docker
           import argparse
           import os
-          import logging
-          logger = logging.getLogger()
-          logger.setLevel(logging.INFO)
+          #import logging
+          #logger = logging.getLogger()
+          #logger.setLevel(logging.INFO)
 
           parser = argparse.ArgumentParser()
           parser.add_argument("-s", "--submissionId", required=True, help="Submission Id")
@@ -89,7 +89,7 @@ requirements:
           if container is not None:
             #These lines below will run as long as the container is running
             for line in container.logs(stream=True):
-              logger.error(line.strip())
+              print(line.strip())
             #Remove container and image after being done
             container.remove()
             try:

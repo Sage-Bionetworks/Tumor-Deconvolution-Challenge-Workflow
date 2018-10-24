@@ -16,7 +16,7 @@ arguments:
   - valueFrom: $(inputs.status)
     prefix: --status
   #Docker run has access to the local file system, so this path is the input directory locally
-  - valueFrom: /home/ubuntu/r1/
+  - valueFrom: /home/aelamb/repos/Tumor-Deconvolution-Challenge-Workflow/example_files/
     prefix: -i
   #No need to pass in output because you should be getting that information in the script
   #- valueFrom: $((runtime.tmpdir).split('/').slice(0,-1).join("/"))/$((runtime.outdir).split("/").slice(-4).join("/"))
@@ -36,9 +36,9 @@ requirements:
           import docker
           import argparse
           import os
-          import logging
-          logger = logging.getLogger()
-          logger.setLevel(logging.INFO)
+          #import logging
+          #logger = logging.getLogger()
+          #logger.setLevel(logging.INFO)
 
           parser = argparse.ArgumentParser()
           parser.add_argument("-s", "--submissionId", required=True, help="Submission Id")
@@ -89,7 +89,7 @@ requirements:
           if container is not None:
             #These lines below will run as long as the container is running
             for line in container.logs(stream=True):
-              logger.error(line.strip())
+              print(line.strip())
             #Remove container and image after being done
             container.remove()
             try:

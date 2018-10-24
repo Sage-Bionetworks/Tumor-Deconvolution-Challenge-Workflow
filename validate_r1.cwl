@@ -6,7 +6,8 @@ baseCommand: [Rscript, /usr/local/bin/validate.R]
 
 hints:
   DockerRequirement:
-    dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge
+    #dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge
+    dockerPull: score_validate
     
 requirements:
   - class: InlineJavascriptRequirement
