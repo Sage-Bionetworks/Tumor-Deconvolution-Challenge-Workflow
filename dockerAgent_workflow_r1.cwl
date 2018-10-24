@@ -106,8 +106,12 @@ steps:
         source: "#getDockerConfig/dockerAuth"
       - id: status
         source: "#validateDocker/status"
+      - id: parentId
+        source: "#submitterUploadSynId"
+      - id: synapseConfig
+        source: "#synapseConfig"
     out:
-      - id: predictions
+     - id: predictions
 
   uploadResults:
     run: uploadToSynapse.cwl
