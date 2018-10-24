@@ -29,6 +29,15 @@ inputs:
 outputs: []
 
 steps:
+
+  downloadGoldStandard:
+    run: downloadGoldStandard_r1.cwl
+    in:
+      - id: synapseConfig
+        source: "#synapseConfig"
+    out:
+      - id: filePath
+
   getSubmissionDocker:
     run: getSubmissionDocker.cwl
     in:
@@ -135,6 +144,8 @@ steps:
     in:
       - id: inputfile
         source: "#runDocker/predictions"
+      - id: validationFile
+        source: "#downloadGoldStandard/filePath"
     out:
       - id: results
       - id: status
@@ -174,6 +185,8 @@ steps:
     in:
       - id: inputfile
         source: "#runDocker/predictions"
+      - id: validationFile
+        source: "#downloadGoldStandard/filePath"
       - id: status 
         source: "#validation/status"
     out:

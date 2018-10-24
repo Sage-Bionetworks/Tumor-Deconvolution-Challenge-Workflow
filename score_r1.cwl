@@ -18,15 +18,12 @@ inputs:
     inputBinding:
       position: 1
   
-  validation_file:
+  validationFile:
     type: File
     inputBinding:
       position: 2
-    default:
-      class: File
-      location: $(runtime.tmpdir)/gold_standard.csv
 
-  json_file:
+  jsonFile:
     type: string
     default: "results.json"
     inputBinding:
@@ -42,4 +39,4 @@ outputs:
   - id: results
     type: File
     outputBinding:
-      glob: $(inputs.json_file)
+      glob: $(inputs.jsonFile)
