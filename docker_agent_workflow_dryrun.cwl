@@ -151,7 +151,7 @@ steps:
     in:
       - id: inputfile
         source: "#run_docker/predictions"
-    - id: goldstandard
+      - id: goldstandard
         source: "#download_goldstandard/filepath"
     out:
       - id: results
@@ -172,7 +172,7 @@ steps:
 
     out: []
 
-  annotate_validation_with_output:
+  annotate_validation_with_output2:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.0/annotate_submission.cwl
     in:
       - id: submissionid
@@ -191,8 +191,7 @@ steps:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.0/download_from_synapse.cwl
     in:
       - id: synapseid
-        #CHANGE THIS TO CORRECT SYNAPSE ID
-        valueFrom: ""
+        valueFrom: "syn17015321"
       - id: synapse_config
         source: "#synapseConfig"
     out:

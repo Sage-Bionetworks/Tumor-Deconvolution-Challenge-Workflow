@@ -43,7 +43,7 @@ outputs:
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['predictionFileStatus'])
 
-  - id: invalidReasons
+  - id: invalid_reasons
     type: string
     outputBinding:
       glob: $(inputs.jsonfile)
