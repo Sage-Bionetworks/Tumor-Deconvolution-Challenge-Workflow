@@ -37,13 +37,13 @@ if(STATUS == "VALIDATED"){
         tibble::deframe() %>% 
         as.list() %>% 
         magrittr::inset("mean_spearman", value = mean_spearman) %>% 
-        magrittr::inset("predictionFileStatus", value = "SCORED") %>% 
+        magrittr::inset("prediction_file_status", value = "SCORED") %>% 
         rjson::toJSON()
     
 } else {
     
     result_json <- 
-        list("predictionFileStatus" = STATUS) %>% 
+        list("prediction_file_status" = STATUS) %>% 
         rjson::toJSON()
 }
 

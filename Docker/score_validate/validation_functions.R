@@ -10,14 +10,14 @@ get_submission_status_json <- function(submission_file, validation_file){
     status <- check_submission_file(submission_file, validation_file)
     if(status$status == "VALIDATED"){
         result_list = list(
-            'predictionFileErrors' = "",
-            'predictionFileStatus' = status$status)
+            'prediction_file_errors' = "",
+            'prediction_file_status' = status$status)
     } else {
         result_list = list(
-            'predictionFileErrors' = stringr::str_c(
+            'prediction_file_errors' = stringr::str_c(
                 status$reasons, 
                 collapse = "\n"),
-            'predictionFileStatus' = status$status)
+            'prediction_file_status' = status$status)
     }
     return(rjson::toJSON(result_list))
 }
