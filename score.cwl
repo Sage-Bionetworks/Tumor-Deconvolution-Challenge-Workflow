@@ -18,12 +18,12 @@ inputs:
     inputBinding:
       position: 1
   
-  validationFile:
+  goldstandard:
     type: File
     inputBinding:
       position: 2
 
-  jsonFile:
+  jsonfile:
     type: string
     default: "results.json"
     inputBinding:
@@ -39,4 +39,4 @@ outputs:
   - id: results
     type: File
     outputBinding:
-      glob: $(inputs.jsonFile)
+      glob: $(inputs.jsonfile)

@@ -18,12 +18,12 @@ inputs:
     inputBinding:
       position: 1
   
-  validationFile:
+  goldstandard:
     type: File
     inputBinding:
       position: 2
 
-  jsonFile:
+  jsonfile:
     type: string
     default: "results.json"
     inputBinding:
@@ -34,18 +34,18 @@ outputs:
   - id: results
     type: File
     outputBinding:
-      glob: $(inputs.jsonFile)
+      glob: $(inputs.jsonfile)
       
   - id: status
     type: string
     outputBinding:
-      glob: $(inputs.jsonFile)
+      glob: $(inputs.jsonfile)
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['predictionFileStatus'])
 
   - id: invalidReasons
     type: string
     outputBinding:
-      glob: $(inputs.jsonFile)
+      glob: $(inputs.jsonfile)
       loadContents: true
       outputEval: $(JSON.parse(self[0].contents)['predictionFileErrors'])
