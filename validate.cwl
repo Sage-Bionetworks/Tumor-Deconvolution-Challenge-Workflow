@@ -41,11 +41,11 @@ outputs:
     outputBinding:
       glob: $(inputs.jsonfile)
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['predictionFileStatus'])
+      outputEval: $(JSON.parse(self[0].contents)['prediction_file_status'])
 
   - id: invalid_reasons
     type: string
     outputBinding:
       glob: $(inputs.jsonfile)
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['predictionFileErrors'])
+      outputEval: $(JSON.parse(self[0].contents)['prediction_file_errors'])
