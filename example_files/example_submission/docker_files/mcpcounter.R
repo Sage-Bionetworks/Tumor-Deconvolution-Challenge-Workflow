@@ -1,6 +1,7 @@
 
 ###############################################################################
-# This code use MCPCounter to calculate cell type predictions. 
+## This code uses MCPCounter to calculate cell type predictions for
+## the coarse-grained sub-Challenge.
 ###############################################################################
 
 
@@ -29,14 +30,26 @@ expression_paths <- paste0("input/", expression_files)
 
 ##### MCPcounter example code below ########
 
-## MCPCounter usually downloads these files. Durring the challenge, Docker
-## images are isolated from the internet, so these need to be included.
+## MCPcounter.estimate (called below) requires two input data frames
+## genes: a data frame indicating the gene HUGO symbols and ENTREZ ids of
+##        markers of each cell population
+## probesets: a data frame indicating the probesets of
+##        markers of each cell population
+## By default, MCPcounter.estimate would download these via
+## probesets=read.table(curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/probesets.txt"),sep="\t",stringsAsFactors=FALSE,colClasses="character")
+## genes=read.table(curl("http://raw.githubusercontent.com/ebecht/MCPcounter/master/Signatures/genes.txt"),sep="\t",stringsAsFactors=FALSE,header=TRUE,colClasses="character",check.names=FALSE)
+
+## However, since internet access is disabled for Dokcer images in this
+## Challenge, we have instead included them directly in the Docker image.
+## Load them from there now.
 genes <- as.data.frame(readr::read_csv("genes.csv"))
 probesets <- as.data.frame(readr::read_csv("probesets.csv"))
 
-
-## The outputed cell types from MCPCounter mostly match the cell types for
-## the course grained sub-challenge, but with different name style.
+## Create a table that translates the cell types output by
+## MCP-Counter ('mcpcounter.cell.type' column) to the cell types
+## required of the course-grained sub-Challenge ('cell.type' column).
+## Note that MCP-Counter does not predict CD4 T cells. Instead, we have
+## mapped MCP-Counter's T cell output as our CD4 T cell prediction.
 translation_df <- tibble::tribble(
     ~cell.type, ~mcpcounter.cell.type,
     "B.cells", "B lineage",
@@ -49,11 +62,13 @@ translation_df <- tibble::tribble(
     "endothelial.cells", "Endothelial cells"
 )
 
-## This function is run once per input dataset
+## Execute MCP-Counter against a dataset.
+## Assumes that expression_path points to a CSV whose gene identifiers
+## are HUGO symbols.
 do_mcpcounter <- function(expression_path, dataset_name){
     
-    # This reads in the input file and converts to a matrix wich will be
-    # inputed to MCPCounter
+    # This reads in the input file and converts to a matrix which will be
+    # input to MCPCounter
     expression_matrix <- expression_path %>% 
         readr::read_csv() %>% 
         as.data.frame() %>%
@@ -85,22 +100,23 @@ do_mcpcounter <- function(expression_path, dataset_name){
     result_df <- dplyr::mutate(result_df, dataset.name = dataset_name)
 }
 
-# Runs the above function on all expression files
+## Run MCP-Counter on each of the expression files
 result_dfs <- purrr::map2(expression_paths, dataset_names, do_mcpcounter) 
 
-# Combine all results into one df
+## Combine all results into one dataframe
 combined_result_df <- dplyr::bind_rows(result_dfs)
 
-# Translate cell type names
+## Translate cell type names as output from MCP-Counter to those
+## required for the coarse-grained sub-Challenge.
 combined_result_df <- combined_result_df %>% 
     dplyr::inner_join(translation_df) %>% 
     dplyr::select(dataset.name, sample.id, cell.type, prediction)
 
 ##### MCPcounter example code above ########
 
-# Create the directory the output will go into
+## Create the directory the output will go into
 dir.create("output")
 
-# Write result into output directory
+## Write result into output directory
 readr::write_csv(combined_result_df, "output/predictions.csv")
     
