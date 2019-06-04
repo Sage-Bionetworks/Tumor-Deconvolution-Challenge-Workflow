@@ -36,7 +36,7 @@ probesets <- as.data.frame(readr::read_csv("probesets.csv"))
 
 
 ## The outputed cell types from MCPCounter mostly match the cell types for
-## the coure grianed sub-challenge, but with different name style.
+## the course grained sub-challenge, but with different name style.
 translation_df <- tibble::tribble(
     ~cell.type, ~mcpcounter.cell.type,
     "B.cells", "B lineage",
@@ -60,7 +60,7 @@ do_mcpcounter <- function(expression_path, dataset_name){
         tibble::column_to_rownames("Gene") %>% 
         as.matrix() 
     
-    # We are using the HUGO version of the expression file, so this need to
+    # We are using the HUGO version of the expression file, so this needs to
     # indicate that here. probests and genes are the dataframes created above.
     result_matrix <- MCPcounter::MCPcounter.estimate(
         expression_matrix,
