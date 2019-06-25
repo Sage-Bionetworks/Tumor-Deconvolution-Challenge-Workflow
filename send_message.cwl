@@ -53,7 +53,7 @@ requirements:
           syn.sendMessage(
             userIds=[args.userid],
             messageSubject=args.subject,
-            messageBody=args.message,
+            messageBody=args.body,
             contentType="text/html")
           
 outputs: []
