@@ -54,7 +54,7 @@ requirements:
             userIds=[args.userid],
             messageSubject=args.subject,
             messageBody=args.body,
-            contentType="text/html")
+            contentType="text")
           
 outputs: []
 

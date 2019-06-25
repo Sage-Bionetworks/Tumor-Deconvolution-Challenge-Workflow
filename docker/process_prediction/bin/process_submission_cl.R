@@ -31,7 +31,8 @@ result <- process_submission_file(
 
 annotation_json <- 
     list(
-        "prediction_file_status" = result$status
+        "prediction_file_status" = result$status,
+        "validation_error" = result$reason
     ) %>%  
     rjson::toJSON() %>% 
     write("annotation.json")
