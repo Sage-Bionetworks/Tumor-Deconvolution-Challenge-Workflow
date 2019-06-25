@@ -15,6 +15,8 @@ library(tidyr)
 
 ## Read in the round and sub-Challenge-specific input file 
 ## listing each of the datasets
+print(list.files())
+print(getwd())
 input_df <- readr::read_csv("input/input.csv")
 
 ## Extract the names of each dataset
@@ -103,4 +105,6 @@ dir.create("output")
 
 # Write result into output directory
 readr::write_csv(combined_result_df, "output/predictions.csv")
+
+print(list.files("output"))
     
