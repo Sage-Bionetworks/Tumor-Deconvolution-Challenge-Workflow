@@ -31,25 +31,25 @@ expression: |
       "9614257": {
         //Tumor_Deconvolution_Course_Fast_Lane
         gold_standard_id: "syn19987490",
-        docker_input_directory: "/home/aelamb/repos/Tumor-Deconvolution-Challenge-Workflow/course_lane_dir",
+        docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
       "9614252": {
         //Tumor_Deconvolution_Fine_Fast_Lane
         gold_standard_id: "syn",
-        docker_input_directory: "fine_lane_dir",
+        docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
       "9614253": {
         //Tumor_Deconvolution_R1_Course
         gold_standard_id: "syn",
-        docker_input_directory: "course_lane_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard_dir",
         score_submission: true
        },
       "9614255": {
         //Tumor_Deconvolution_R1_Fine
         gold_standard_id: "syn",
-        docker_input_directory: "fine_lane_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard_dir",
         score_submission: true
        }
     };
