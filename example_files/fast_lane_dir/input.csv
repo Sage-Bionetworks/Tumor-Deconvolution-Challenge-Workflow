@@ -1,3 +1,3 @@
-dataset.name,hugo.expr.file
-ds1,ds1.csv
-ds2,ds2.csv
+dataset.name,cancer.type,platform,scale,native.probe.type,native.expr.file,hugo.expr.file,ensg.expr.file
+ds1,BRCA,Illumina HiSeq 2000,Linear,Hugo,ds1.csv,ds1.csv,ds1_ensg.csv
+ds2,CRC,Illumina HiSeq 2000,Linear,Hugo,ds2.csv,ds2.csv,ds1_ensg.csv
