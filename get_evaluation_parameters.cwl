@@ -36,7 +36,7 @@ expression: |
        },
       "9614252": {
         //Tumor_Deconvolution_Fine_Fast_Lane
-        gold_standard_id: "syn",
+        gold_standard_id: "syn19987490",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
