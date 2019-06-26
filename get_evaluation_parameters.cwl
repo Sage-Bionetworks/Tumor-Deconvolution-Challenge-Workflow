@@ -30,13 +30,13 @@ expression: |
     var dict = {
       "9614257": {
         //Tumor_Deconvolution_Course_Fast_Lane
-        gold_standard_id: "syn19987490",
+        gold_standard_id: "syn20071471",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
       "9614252": {
         //Tumor_Deconvolution_Fine_Fast_Lane
-        gold_standard_id: "syn19987490",
+        gold_standard_id: "syn20071476",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
