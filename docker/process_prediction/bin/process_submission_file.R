@@ -3,10 +3,12 @@ library(dplyr)
 library(readr)
 
 source("/usr/local/bin/validation_functions.R")
-#source("validation_functions.R")
-#submission_file <- "../example_files/example_submission/output/predictions.csv"
-#validation_file <- "../example_files/example_submission/validation/gold_standard.csv"
-#score_submission = F
+source("/usr/local/bin/scoring_functions.R")
+# source("validation_functions.R")
+# source("scoring_functions.R")
+# validation_file <- "../../../example_files/example_gold_standard/fast_lane_course.csv"
+# submission_file <- "../../../example_files/example_submission/output/predictions.csv"
+# score_submission = T
 
 
 ######
@@ -49,10 +51,11 @@ process_submission_file <- function(
             result$reason = validate_submission_result
         }
     }
-    # if(all(result$status == "VALIDATED", score_submission)){
-    #     # add scoring functionality
-    #     result$status <- "SCORED"
-    #     result$annotations <- annotations
-    # }
+    if(all(result$status == "VALIDATED", score_submission)){
+        result$status <- "SCORED"
+        result$annotations <- create_score_annotations(
+            submission_df, 
+            validation_df)
+    }
     return(result)
 }

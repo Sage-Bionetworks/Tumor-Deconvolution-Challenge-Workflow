@@ -29,26 +29,26 @@ expression: |
   ${
     var dict = {
       "9614257": {
-        //Tumor_Deconvolution_Course_Fast_Lane
+        //Course_Fast_Lane
         gold_standard_id: "syn20071471",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
       "9614252": {
-        //Tumor_Deconvolution_Fine_Fast_Lane
+        //Fine_Fast_Lane
         gold_standard_id: "syn20071476",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
         score_submission: false
        },
       "9614253": {
-        //Tumor_Deconvolution_R1_Course
-        gold_standard_id: "syn",
+        //R1_Course
+        gold_standard_id: "syn20369164",
         docker_input_directory: "/home/ubuntu/leaderboard_dir",
         score_submission: true
        },
       "9614255": {
-        //Tumor_Deconvolution_R1_Fine
-        gold_standard_id: "syn",
+        //R1_Fine
+        gold_standard_id: "syn20369201",
         docker_input_directory: "/home/ubuntu/leaderboard_dir",
         score_submission: true
        }

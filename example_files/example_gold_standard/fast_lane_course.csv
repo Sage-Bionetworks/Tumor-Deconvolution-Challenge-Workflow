@@ -1,4 +1,4 @@
-dataset.name,sample.id,cell.type,prediction
+dataset.name,sample.id,cell.type,measured
 ds1,Sample_1,CD4.T.cells,1265.6338587828666
 ds1,Sample_1,CD8.T.cells,443.0135019445
 ds1,Sample_1,NK.cells,257.2772489222857
