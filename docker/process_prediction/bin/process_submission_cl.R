@@ -49,7 +49,7 @@ result_json <-
         "invalid_reason_string" = result$reason,
         "annotation_string" = result$annotations %>% 
             purrr::imap(~stringr::str_c(.y, .x, sep = ": ")) %>% 
-            stringr::str_c(collapse = "/n")
+            stringr::str_c(collapse = "; ")
     ) %>%  
     rjson::toJSON() %>% 
     write("results.json")
