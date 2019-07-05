@@ -1,12 +1,15 @@
 #!/usr/bin/env cwl-runner
-#
-# Example sends validation emails to participants
-#
+
 cwlVersion: v1.0
 class: CommandLineTool
+
 baseCommand: 
 - python
-- send_message.py
+- /usr/local/bin/send_message.py
+
+hints:
+- class:  DockerRequirement
+  dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge_python
 
 inputs:
 
@@ -29,32 +32,16 @@ inputs:
   type: string
   inputBinding:
     prefix: -b
-
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: send_message.py
-        entry: |
-          #!/usr/bin/env python
-          import synapseclient
-          import argparse
-          parser = argparse.ArgumentParser()
-          parser.add_argument("-c", "--synapse_config", required=True)
-          parser.add_argument("-u", "--userid", required=True)
-          parser.add_argument("-s", "--subject", required=True)
-          parser.add_argument("-b", "--body", required=True)
-
-
-          args = parser.parse_args()
-          syn = synapseclient.Synapse(configPath=args.synapse_config)
-          syn.login()
-
-          syn.sendMessage(
-            userIds=[args.userid],
-            messageSubject=args.subject,
-            messageBody=args.body,
-            contentType="text")
           
 outputs: []
+
+$namespaces:
+  s: https://schema.org/
+
+s:author:
+  - class: s:Person
+    s:identifier: https://orcid.org/0000-0002-0326-7494
+    s:email: andrew.lamb@sagebase.org
+
+s:name: Andrew Lamb
 

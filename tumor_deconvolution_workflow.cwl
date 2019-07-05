@@ -32,7 +32,7 @@ steps:
         source: synapseConfig
     out:
       - id: userid
-      - id: submission_name
+      - id: name
       - id: evaluationid
 
   - id: get_evaluation_attributes
@@ -43,7 +43,7 @@ steps:
       - id: synapse_config
         source: synapseConfig
     out:
-      - id: evaluation_name
+      - id: name
 
   - id: get_evaluation_parameters
     run: get_evaluation_parameters.cwl
@@ -198,11 +198,11 @@ steps:
     - id: status
       source: process_prediction_file/status
     - id: evaluation_name
-      source: get_evaluation_attributes/evaluation_name
+      source: get_evaluation_attributes/name
     - id: submissionid
       source: submissionId
     - id: submission_name
-      source: get_submission_attributes/submission_name
+      source: get_submission_attributes/name
     - id: invalid_reason_string
       source: process_prediction_file/invalid_reason_string
     - id: annotation_string

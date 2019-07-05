@@ -1,12 +1,18 @@
 #!/usr/bin/env cwl-runner
-#
-# Example sends validation emails to participants
-#
+
 cwlVersion: v1.0
 class: CommandLineTool
+
 baseCommand: 
-  - python 
-  - get_evaluation_attributes.py
+- python 
+- /usr/local/bin/get_evaluation_attributes.py
+
+hints:
+- class:  DockerRequirement
+  dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge_python
+
+requirements:
+- class: InlineJavascriptRequirement
 
 inputs:
 
@@ -20,39 +26,86 @@ inputs:
     inputBinding:
       prefix: -c
 
-
-requirements:
-  - class: InlineJavascriptRequirement
-  - class: InitialWorkDirRequirement
-    listing:
-      - entryname: get_evaluation_attributes.py
-        entry: |
-          #!/usr/bin/env python
-          import synapseclient
-          import argparse
-          import json
-          import os
-          parser = argparse.ArgumentParser()
-          parser.add_argument("-e", "--evaluationid", required=True, help="evaluationid")
-          parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
-
-          args = parser.parse_args()
-          syn = synapseclient.Synapse(configPath=args.synapse_config)
-          syn.login()
-
-          eval = syn.getEvaluation(args.evaluationid)
-
-          result = {'evaluation_name': eval.name}
-
-          with open("results.json", 'w') as o:
-            o.write(json.dumps(result))
-     
 outputs:
 
-  - id: evaluation_name
+  - id: content_source
     type: string
     outputBinding:
       glob: results.json
       loadContents: true
-      outputEval: $(JSON.parse(self[0].contents)['evaluation_name'])
+      outputEval: $(JSON.parse(self[0].contents)['content_source'])
+
+  - id: created_on
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['created_on'])
+
+  - id: description
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['description'])
+
+  - id: etag
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['etag'])
+
+  - id: id
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['id'])
+
+  - id: name
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['name'])
+
+  - id: ownerid
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['ownerid'])
+
+  - id: status
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['status'])
+
+  - id: submission_instructions_message
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['submission_instructions_message'])
+
+
+  - id: submission_receipt_message
+    type: string
+    outputBinding:
+      glob: results.json
+      loadContents: true
+      outputEval: $(JSON.parse(self[0].contents)['submission_receipt_message'])
+
+$namespaces:
+  s: https://schema.org/
+
+s:author:
+  - class: s:Person
+    s:identifier: https://orcid.org/0000-0002-0326-7494
+    s:email: andrew.lamb@sagebase.org
+
+s:name: Andrew Lamb
 
