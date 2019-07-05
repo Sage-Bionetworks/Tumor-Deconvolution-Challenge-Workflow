@@ -43,13 +43,13 @@ expression: |
       "9614253": {
         //R1_Course
         gold_standard_id: "syn20369164",
-        docker_input_directory: "/home/ec2-user/leaderboard_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard_dir",
         score_submission: true
        },
       "9614255": {
         //R1_Fine
         gold_standard_id: "syn20369201",
-        docker_input_directory: "/home/ec2-user/leaderboard_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard_dir",
         score_submission: true
        }
     };
