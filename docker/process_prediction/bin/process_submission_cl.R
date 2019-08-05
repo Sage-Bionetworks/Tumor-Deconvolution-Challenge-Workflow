@@ -23,8 +23,8 @@ parser$add_argument(
 
 args <- parser$parse_args()
 # args <- list(
-#     validation_file = "../../../example_files/example_gold_standard/fast_lane_course.csv",
-#     submission_file = "../../../example_files/example_submission/output/predictions.csv",
+#     validation_file = "lb_coarse_r1.csv",
+#     submission_file = "predictions.csv",
 #     score_submission = T
 # )
 

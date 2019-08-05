@@ -5,22 +5,23 @@ require(rlang)
 require(tidyr)
 
 validate_submission <- function(
-    sub_df, val_df,
+    submission_df, validation_df,
     key_cols = "key",
     pred_col = "prediction",
     meas_col = "measured"){
     
-    validate_correct_columns(sub_df, c(key_cols, pred_col))
-    validate_complete_df(sub_df, key_cols)
-    sub_df2 <- sub_df %>%
+    validate_correct_columns(submission_df, c(key_cols, pred_col))
+    validate_complete_df(submission_df, key_cols)
+    submission_df2 <- submission_df %>%
         tidyr::unite("key", key_cols, sep = ";") %>%
         dplyr::select("key", "prediction" = pred_col)
-    val_df2 <- val_df %>%
+    validation_df2 <- validation_df %>%
         tidyr::unite("key", key_cols, sep = ";") %>%
-        dplyr::select("key", "measured" = meas_col)
-    validate_no_duplicate_rows(sub_df2)
-    validate_prediction_column_complete(sub_df2)
-    validate_combined_df(sub_df2, val_df2)
+        dplyr::select("key", "measured" = meas_col) %>% 
+        dplyr::mutate(measured = 0)
+    validate_no_duplicate_rows(submission_df2)
+    validate_prediction_column_complete(submission_df2)
+    validate_combined_df(submission_df2, validation_df2)
 }
 
 # utils ----

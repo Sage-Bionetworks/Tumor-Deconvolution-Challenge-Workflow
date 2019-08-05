@@ -4,15 +4,22 @@ require(magrittr)
 require(purrr)
 
 create_score_annotations <- function(submission_df, validation_df){
-    combined_df <- dplyr::inner_join(submission_df, validation_df)
+    combined_df <- validation_df %>% 
+        tidyr::drop_na() %>% 
+        dplyr::left_join(submission_df)
     ct_summary_df <- summarize_by_cell_type(combined_df)
-    ds_summary_df <- summarize_by_dataset(ct_summary_df)
-    sub_summary_df <- summarize_by_submission(ds_summary_df)
+    ds_summary_df <- summarize_by_dataset(combined_df)
+    #ds_summary_df <- summarize_by_dataset(ct_summary_df)
+    #sub_summary_df <- summarize_by_submission(ds_summary_df)
     scores <- c(
         df_to_metric_vector(ct_summary_df, dataset.name, cell.type),
-        df_to_metric_vector(ds_summary_df, dataset.name),
-        df_to_metric_vector2(sub_summary_df)
+        df_to_metric_vector(ds_summary_df, dataset.name)
     )
+    # scores <- c(
+    #     df_to_metric_vector(ct_summary_df, dataset.name, cell.type),
+    #     df_to_metric_vector(ds_summary_df, dataset.name),
+    #     df_to_metric_vector2(sub_summary_df)
+    # )
     rounded_scores <- round_named_list(scores) 
     c(scores, rounded_scores)
 }
@@ -38,10 +45,20 @@ summarize_by_cell_type <- purrr::partial(
 summarize_by_dataset <- purrr::partial(
     summarize_by,
     .group_cols = exprs(dataset.name),
-    median_pearson = median(pearson),
-    median_spearman = median(spearman),
-    
+    pearson = score_correlation(prediction, measured),
+    spearman = score_correlation(
+        prediction,
+        measured, 
+        method = "spearman"
+    )
 )
+
+# summarize_by_dataset <- purrr::partial(
+#     summarize_by,
+#     .group_cols = exprs(dataset.name),
+#     median_pearson = median(pearson),
+#     median_spearman = median(spearman),
+# )
 
 summarize_by_submission <- purrr::partial(
     summarize_by,
