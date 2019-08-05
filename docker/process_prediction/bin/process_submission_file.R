@@ -2,10 +2,10 @@ library(magrittr)
 library(dplyr)
 library(readr)
 
-# source("/usr/local/bin/validation_functions.R")
-# source("/usr/local/bin/scoring_functions.R")
-source("validation_functions.R")
-source("scoring_functions.R")
+source("/usr/local/bin/validation_functions.R")
+source("/usr/local/bin/scoring_functions.R")
+# source("validation_functions.R")
+# source("scoring_functions.R")
 # validation_file <- "lb_coarse_r1.csv"
 # submission_file <- "predictions.csv"
 # score_submission = T
