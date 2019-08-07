@@ -11,7 +11,7 @@ requirements:
 
 hints:
 - class:  DockerRequirement
-  dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge
+  dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge:1.0
 
 inputs:
 
