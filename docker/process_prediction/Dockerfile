@@ -1,4 +1,4 @@
-FROM rocker/tidyverse
+FROM rocker/tidyverse:3.6.1
 
 RUN Rscript -e "install.packages('argparse')"
 RUN Rscript -e "install.packages('rjson')"
