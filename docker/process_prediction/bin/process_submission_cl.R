@@ -43,12 +43,6 @@ annotation_json <-
     rjson::toJSON() %>% 
     write("annotation.json")
 
-parse_rounded_annotations <- function(l){
-    result$annotations %>% 
-        purrr::keep(stringr::str_detect(names(.), "rounded")) %>% 
-        magrittr::set_names(stringr::str_remove_all(names(.), "_rounded"))
-}
-
 result_json <- 
     list(
         "status" = result$status,
@@ -57,8 +51,8 @@ result_json <-
             result$annotations %>% 
             purrr::keep(stringr::str_detect(names(.), "rounded")) %>% 
             magrittr::set_names(stringr::str_remove_all(names(.), "_rounded")) %>% 
-            purrr::imap(~stringr::str_c(.y, .x, sep = ": ")) %>%
-            stringr::str_c(collapse = "; ")
+            purrr::imap(~stringr::str_c(.y, .x, sep = ":")) %>%
+            stringr::str_c(collapse = ";")
     ) %>%  
     rjson::toJSON() %>% 
     write("results.json")
