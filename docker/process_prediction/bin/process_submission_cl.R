@@ -2,7 +2,7 @@ library(argparse)
 library(rjson)
 
 source("/usr/local/bin/process_submission_file.R")
-# source("process_submission_file.R")
+#source("process_submission_file.R")
 
 parser = ArgumentParser()
 
@@ -47,9 +47,9 @@ result_json <-
     list(
         "status" = result$status,
         "invalid_reason_string" = result$reason,
-        "annotation_string" = 
-            result$annotations %>% 
+        "annotation_string" =  result$annotations %>% 
             purrr::keep(stringr::str_detect(names(.), "rounded")) %>% 
+            purrr::keep(stringr::str_detect(names(.), "[:print:]+_[:print:]+_[:print:]+_[:print:]+")) %>% 
             magrittr::set_names(stringr::str_remove_all(names(.), "_rounded")) %>% 
             purrr::imap(~stringr::str_c(.y, .x, sep = ":")) %>%
             stringr::str_c(collapse = ";")
