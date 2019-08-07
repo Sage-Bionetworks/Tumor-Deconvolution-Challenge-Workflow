@@ -9,7 +9,7 @@ baseCommand:
 
 hints:
 - class:  DockerRequirement
-  dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge_python
+  dockerPull: quay.io/andrewelamb/tumor_deconvolution_challenge_python:1.0
 
 inputs:
 

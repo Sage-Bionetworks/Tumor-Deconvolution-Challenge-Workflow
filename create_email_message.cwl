@@ -52,7 +52,8 @@ expression: |
 
     } else {
       var body = "Your submission has been scored, below are your result(s):\n\n" +
-                 inputs.annotation_string
+                 inputs.annotation_string.replace(";", "\n");
+
 
     }
     body = "Hello participant,\n\n" +
