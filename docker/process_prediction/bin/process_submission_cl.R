@@ -43,17 +43,32 @@ annotation_json <-
     rjson::toJSON() %>% 
     write("annotation.json")
 
-result_json <- 
-    list(
+if (result$annotations == ""){
+    result_list <- list(
         "status" = result$status,
         "invalid_reason_string" = result$reason,
         "annotation_string" =  result$annotations %>% 
             purrr::keep(stringr::str_detect(names(.), "rounded")) %>% 
-            purrr::keep(stringr::str_detect(names(.), "[:print:]+_[:print:]+_[:print:]+_[:print:]+")) %>% 
-            magrittr::set_names(stringr::str_remove_all(names(.), "_rounded")) %>% 
+            purrr::keep(stringr::str_detect(
+                names(.),
+                "[:print:]+_[:print:]+_[:print:]+_[:print:]+"
+            )) %>% 
+            magrittr::set_names(stringr::str_remove_all(
+                names(.),
+                "_rounded"
+            )) %>% 
             purrr::imap(~stringr::str_c(.y, .x, sep = ":")) %>%
             stringr::str_c(collapse = ";")
-    ) %>%  
+    )
+} else {
+    result_list <- list(
+        "status" = result$status,
+        "invalid_reason_string" = result$reason,
+        "annotation_string" =  result$annotations
+    )
+}
+
+result_list %>%  
     rjson::toJSON() %>% 
     write("results.json")
 

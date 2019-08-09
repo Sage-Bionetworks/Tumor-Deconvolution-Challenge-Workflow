@@ -9,10 +9,6 @@ baseCommand:
   - python
   - runDocker.py
 
-hints:
-- class: ResourceRequirement
-  ramMin: 8000
-
 inputs:
 
   - id: submissionid
@@ -58,7 +54,9 @@ inputs:
 
 
 requirements:
-#  - class: InlineJavascriptRequirement
+   -class: ResourceRequirement:
+    ramMin: 16000
+    coresMin: 4
   - class: InitialWorkDirRequirement
     listing:
       - entryname: .docker/config.json
@@ -121,7 +119,7 @@ requirements:
               #Run as detached, logs will stream below
               print(volumes)
               try:
-                container = client.containers.run(docker_image,detach=True, volumes = volumes, name=args.submissionid, network_disabled=True, mem_limit='8g', stderr=True)
+                container = client.containers.run(docker_image,detach=True, volumes = volumes, name=args.submissionid, network_disabled=True, mem_limit='16g', stderr=True)
               except docker.errors.APIError as e:
                 cont = client.containers.get(args.submissionid)
                 cont.remove()
