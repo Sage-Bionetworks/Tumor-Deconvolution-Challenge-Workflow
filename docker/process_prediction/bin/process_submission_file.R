@@ -6,8 +6,8 @@ source("/usr/local/bin/validation_functions.R")
 source("/usr/local/bin/scoring_functions.R")
 # source("validation_functions.R")
 # source("scoring_functions.R")
-# validation_file <- "lb_coarse_r1.csv"
-# submission_file <- "predictions.csv"
+# validation_file <- "/home/aelamb/repos/Tumor-Deconvolution-Challenge-Workflow/example_files/example_gold_standard/fast_lane_course.csv"
+# submission_file = "/home/aelamb/Downloads/9688261.csv"
 # score_submission = T
 
 
