@@ -54,9 +54,6 @@ inputs:
 
 
 requirements:
-   -class: ResourceRequirement:
-    ramMin: 16000
-    coresMin: 4
   - class: InitialWorkDirRequirement
     listing:
       - entryname: .docker/config.json
