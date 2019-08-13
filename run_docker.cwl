@@ -52,8 +52,21 @@ inputs:
   - id: docker_authentication
     type: string
 
+  - id: cores
+    type: int
+
+  - id: ram
+    type:: int
+    inputBinding:
+      prefix: -m
+
 
 requirements:
+  - class: ResourceRequirement
+    coresMin: inputs.cores
+    coresMax: inputs.cores
+    ramMin: inputs.ram
+    ramMax: inputs.ram
   - class: InitialWorkDirRequirement
     listing:
       - entryname: .docker/config.json
@@ -116,7 +129,7 @@ requirements:
               #Run as detached, logs will stream below
               print(volumes)
               try:
-                container = client.containers.run(docker_image,detach=True, volumes = volumes, name=args.submissionid, network_disabled=True, mem_limit='16g', stderr=True)
+                container = client.containers.run(docker_image,detach=True, volumes = volumes, name=args.submissionid, network_disabled=True, mem_limit=args.memory, stderr=True)
               except docker.errors.APIError as e:
                 cont = client.containers.get(args.submissionid)
                 cont.remove()
@@ -197,6 +210,7 @@ requirements:
             parser.add_argument("-d", "--docker_digest", required=True, help="Docker Digest")
             parser.add_argument("-i", "--input_dir", required=True, help="Input Directory")
             parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
+            parser.add_argument("-m", "--memory", required=True)
             parser.add_argument("--parentid", required=True, help="Parent Id of submitter directory")
             parser.add_argument("--status", required=True, help="Docker image status")
             args = parser.parse_args()
