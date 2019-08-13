@@ -9,6 +9,10 @@ baseCommand:
   - python
   - runDocker.py
 
+arguments:
+- "-m"
+- $(inputs.ram + "M")
+
 inputs:
 
   - id: submissionid
@@ -56,12 +60,13 @@ inputs:
     type: int
 
   - id: ram
-    type:: int
+    type: int
     inputBinding:
       prefix: -m
 
 
 requirements:
+  - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     coresMin: inputs.cores
     coresMax: inputs.cores
