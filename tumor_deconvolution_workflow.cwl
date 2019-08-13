@@ -54,6 +54,8 @@ steps:
       - id: gold_standard_id
       - id: docker_input_directory
       - id: score_submission
+      - id: cores
+      - id: ram
 
   - id: get_docker_submission
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/get_submission_docker.cwl
@@ -109,6 +111,10 @@ steps:
   - id: run_docker
     run: run_docker.cwl
     in:
+      - id: cores
+        source: get_evaluation_parameters/cores
+      - id: ram
+        source: get_evaluation_parameters/ram
       - id: docker_repository
         source: get_docker_submission/docker_repository
       - id: docker_digest
