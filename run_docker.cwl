@@ -53,7 +53,7 @@ inputs:
   - id: param_dir
     type: string
     inputBinding:
-      prefix: -i
+      prefix: --param_dir
  
   - id: docker_registry
     type: string
@@ -111,6 +111,7 @@ requirements:
             #These are the volumes that you want to mount onto your docker container
             output_dir = os.getcwd()
             input_dir = args.input_dir
+            param_dir = args.param_dir
             #These are the locations on the docker that you want your mounted volumes to be + permissions in docker (ro, rw)
             #It has to be in this format '/output:rw'
             mounted_volumes = {
@@ -220,6 +221,7 @@ requirements:
             parser.add_argument("-p", "--docker_repository", required=True, help="Docker Repository")
             parser.add_argument("-d", "--docker_digest", required=True, help="Docker Digest")
             parser.add_argument("-i", "--input_dir", required=True, help="Input Directory")
+            parser.add_argument("-x", "--param_dir", required=True)
             parser.add_argument("-c", "--synapse_config", required=True, help="credentials file")
             parser.add_argument("-m", "--memory", required=True)
             parser.add_argument("--parentid", required=True, help="Parent Id of submitter directory")
