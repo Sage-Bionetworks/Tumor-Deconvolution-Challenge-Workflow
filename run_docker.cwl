@@ -61,17 +61,15 @@ inputs:
 
   - id: ram
     type: int
-    inputBinding:
-      prefix: -m
 
 
 requirements:
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
-    coresMin: inputs.cores
-    coresMax: inputs.cores
-    ramMin: inputs.ram
-    ramMax: inputs.ram
+    coresMin: $(inputs.cores)
+    coresMax: $(inputs.cores)
+    ramMin: $(inputs.ram)
+    ramMax: $(inputs.ram)
   - class: InitialWorkDirRequirement
     listing:
       - entryname: .docker/config.json
