@@ -53,6 +53,7 @@ steps:
     out:
       - id: gold_standard_id
       - id: docker_input_directory
+      - id: docker_param_directory
       - id: score_submission
       - id: cores
       - id: ram
@@ -133,6 +134,8 @@ steps:
         source: synapseConfig
       - id: input_dir
         source: get_evaluation_parameters/docker_input_directory
+      - id: param_dir
+        source: get_evaluation_parameters/docker_param_directory
     out:
       - id: predictions
 

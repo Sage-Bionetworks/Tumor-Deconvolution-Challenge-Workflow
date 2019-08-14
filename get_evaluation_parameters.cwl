@@ -21,6 +21,8 @@ outputs:
   type: string
 - id: docker_input_directory
   type: string
+- id: docker_param_directory
+  type: string
 - id: score_submission
   type: boolean
 - id: cores
@@ -34,9 +36,10 @@ expression: |
   ${
     var dict = {
       "9614257": {
-        //Course_Fast_Lane
+        //Coarse_Fast_Lane
         gold_standard_id: "syn20071471",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
+        docker_param_directory: "/home/ubuntu/fast_lane_coarse_dir",
         score_submission: false,
         cores: 4,
         ram: 15000
@@ -45,14 +48,16 @@ expression: |
         //Fine_Fast_Lane
         gold_standard_id: "syn20071476",
         docker_input_directory: "/home/ubuntu/fast_lane_dir",
+        docker_param_directory: "/home/ubuntu/fast_lane_fine_dir",
         score_submission: false,
         cores: 4,
         ram: 15000
        },
       "9614253": {
-        //R1_Course
+        //R1_Coarse
         gold_standard_id: "syn20564963",
         docker_input_directory: "/home/ubuntu/leaderboard1_dir",
+        docker_param_directory: "/home/ubuntu/leaderboard1_coarse_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
@@ -61,6 +66,7 @@ expression: |
         //R1_Fine
         gold_standard_id: "syn20564965",
         docker_input_directory: "/home/ubuntu/leaderboard1_dir",
+        docker_param_directory: "/home/ubuntu/leaderboard1_fine_dir",
         score_submission: true,
         cores: 8,
         ram: 30000

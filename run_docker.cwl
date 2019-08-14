@@ -49,6 +49,11 @@ inputs:
     type: string
     inputBinding:
       prefix: -i
+
+  - id: param_dir
+    type: string
+    inputBinding:
+      prefix: -i
  
   - id: docker_registry
     type: string
@@ -108,8 +113,11 @@ requirements:
             input_dir = args.input_dir
             #These are the locations on the docker that you want your mounted volumes to be + permissions in docker (ro, rw)
             #It has to be in this format '/output:rw'
-            mounted_volumes = {output_dir:'/output:rw',
-                               input_dir:'/input:ro'}
+            mounted_volumes = {
+                output_dir:'/output:rw',
+                input_dir:'/input:ro',
+                param_dir:'/param:ro'
+            }
             #All mounted volumes here in a list
             all_volumes = [output_dir,input_dir]
             #Mount volumes
