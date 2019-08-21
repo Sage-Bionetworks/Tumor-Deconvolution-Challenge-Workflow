@@ -1,3 +1,3 @@
 dataset.name,cancer.type,platform,scale,native.probe.type,native.expr.file,hugo.expr.file,ensg.expr.file,symbol.compression.function,ensg.compression.function,native.expr.est.counts.file,hugo.expr.est.counts.file,ensg.expr.est.counts.file,symbol.compression.est.counts.function,ensg.compression.est.counts.function,symbol.to.native.mapping.file,ensg.to.native.mapping.file,fastq1.files,fastq2.files,fastq.samples,normalization
 ds1,BRCA,Illumina HiSeq 2000,Linear,Hugo,ds1.csv,ds1.csv,ds1_ensg.csv,colMeans,colMeans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,TPM
-ds2,CRC,Illumina HiSeq 2000,Linear,Hugo,ds2.csv,ds2.csv,ds1_ensg.csv,colMeans,colMeans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,TPM
+ds2,CRC,Illumina HiSeq 2000,Linear,Hugo,ds2.csv,ds2.csv,ds2_ensg.csv,colMeans,colMeans,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,TPM
