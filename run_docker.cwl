@@ -120,7 +120,7 @@ requirements:
                 param_dir:'/param:ro'
             }
             #All mounted volumes here in a list
-            all_volumes = [output_dir,input_dir]
+            all_volumes = [output_dir,input_dir, param_dir]
             #Mount volumes
             volumes = {}
             for vol in all_volumes:
