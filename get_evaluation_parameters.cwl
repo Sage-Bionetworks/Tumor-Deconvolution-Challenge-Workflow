@@ -70,7 +70,7 @@ expression: |
         score_submission: true,
         cores: 8,
         ram: 30000
-       }
+       },
       "9614313": {
         //R2_Coarse
         gold_standard_id: "syn20564964",
@@ -88,7 +88,7 @@ expression: |
         score_submission: true,
         cores: 8,
         ram: 30000
-       }
+       },
       "9614315": {
         //R3_Coarse
         gold_standard_id: "",
@@ -106,8 +106,7 @@ expression: |
         score_submission: true,
         cores: 8,
         ram: 30000
-       }
-
+       },
       "9614317": {
         //Final_Coarse
         gold_standard_id: "",
