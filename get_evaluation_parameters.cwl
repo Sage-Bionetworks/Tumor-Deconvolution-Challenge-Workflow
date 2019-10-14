@@ -91,7 +91,7 @@ expression: |
        },
       "9614315": {
         //R3_Coarse
-        gold_standard_id: "",
+        gold_standard_id: "syn20968872",
         docker_input_directory: "/home/ubuntu/leaderboard3_dir",
         docker_param_directory: "/home/ubuntu/leaderboard3_coarse_dir",
         score_submission: true,
@@ -100,7 +100,7 @@ expression: |
        },
       "9614316": {
         //R3_Fine
-        gold_standard_id: "",
+        gold_standard_id: "syn20968867",
         docker_input_directory: "/home/ubuntu/leaderboard3_dir",
         docker_param_directory: "/home/ubuntu/leaderboard3_fine_dir",
         score_submission: true,
