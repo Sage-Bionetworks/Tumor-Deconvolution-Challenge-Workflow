@@ -6,7 +6,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 
 baseCommand: 
-  - python
+  - python3
   - runDocker.py
 
 arguments:
