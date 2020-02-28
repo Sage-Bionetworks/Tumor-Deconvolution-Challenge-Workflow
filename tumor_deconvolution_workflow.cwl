@@ -62,9 +62,9 @@ steps:
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/get_submission.cwl
     in:
       - id: submissionid
-        source: "#submissionId"
+        source: submissionId
       - id: synapse_config
-        source: "#synapseConfig"
+        source: synapseConfig
     out:
       - id: filepath
       - id: docker_repository
