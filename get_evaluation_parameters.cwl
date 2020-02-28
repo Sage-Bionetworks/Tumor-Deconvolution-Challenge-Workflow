@@ -56,8 +56,8 @@ expression: |
       "9614253": {
         //R1_Coarse
         gold_standard_id: "syn20564963",
-        docker_input_directory: "/home/aelamb/leaderboard1_dir",
-        docker_param_directory: "/home/aelamb/leaderboard1_coarse_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard1_dir",
+        docker_param_directory: "/home/ubuntu/leaderboard1_coarse_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
@@ -74,8 +74,8 @@ expression: |
       "9614313": {
         //R2_Coarse
         gold_standard_id: "syn20564964",
-        docker_input_directory: "/home/aelamb/leaderboard2_dir",
-        docker_param_directory: "/home/aelamb/leaderboard2_coarse_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard2_dir",
+        docker_param_directory: "/home/ubuntu/leaderboard2_coarse_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
@@ -92,8 +92,8 @@ expression: |
       "9614315": {
         //R3_Coarse
         gold_standard_id: "syn20968872",
-        docker_input_directory: "/home/ubuntu/leaderboard3_dir",
-        docker_param_directory: "/home/ubuntu/leaderboard3_coarse_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard3_coarse_dir",
+        docker_param_directory: "/home/ubuntu/leaderboard3_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
@@ -101,8 +101,8 @@ expression: |
       "9614316": {
         //R3_Fine
         gold_standard_id: "syn20968867",
-        docker_input_directory: "/home/ubuntu/leaderboard3_dir",
-        docker_param_directory: "/home/ubuntu/leaderboard3_fine_dir",
+        docker_input_directory: "/home/ubuntu/leaderboard3_fine_dir",
+        docker_param_directory: "/home/ubuntu/leaderboard3_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
