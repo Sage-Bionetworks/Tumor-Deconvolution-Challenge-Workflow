@@ -159,7 +159,7 @@ requirements:
                 if isinstance(log_text, bytes):
                   log_text = log_text.decode('utf-8')
                 with open(log_filename,'w') as log_file:
-                  log_file.write(log_text)
+                  log_file.write(log_text.encode("ascii", "ignore").decode("ascii"))
                 statinfo = os.stat(log_filename)
                 if statinfo.st_size > 0 and statinfo.st_size/1000.0 <= 50:
                   ent = synapseclient.File(log_filename, parent = args.parentid)
@@ -173,7 +173,7 @@ requirements:
               if isinstance(log_text, bytes):
                 log_text = log_text.decode('utf-8')
               with open(log_filename,'w') as log_file:
-                log_file.write(log_text)
+                log_file.write(log_text.encode("ascii", "ignore").decode("ascii"))
               statinfo = os.stat(log_filename)
               #Only store log file if > 0 bytes
               if statinfo.st_size > 0 and statinfo.st_size/1000.0 <= 50:
