@@ -156,6 +156,8 @@ requirements:
               #Check if container is still running
               while container in client.containers.list():
                 log_text = container.logs()
+                if isinstance(log_text, bytes):
+                  log_text = log_text.decode('utf-8')
                 with open(log_filename,'w') as log_file:
                   log_file.write(log_text)
                 statinfo = os.stat(log_filename)
@@ -168,6 +170,8 @@ requirements:
                   time.sleep(60)
               #Must run again to make sure all the logs are captured
               log_text = container.logs()
+              if isinstance(log_text, bytes):
+                log_text = log_text.decode('utf-8')
               with open(log_filename,'w') as log_file:
                 log_file.write(log_text)
               statinfo = os.stat(log_filename)
