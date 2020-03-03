@@ -60,7 +60,7 @@ expression: |
         docker_param_directory: "/home/aelamb/leaderboard1_coarse_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614255": {
         //R1_Fine
@@ -69,7 +69,7 @@ expression: |
         docker_param_directory: "/home/aelamb/leaderboard1_fine_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614313": {
         //R2_Coarse
@@ -78,7 +78,7 @@ expression: |
         docker_param_directory: "/home/aelamb/leaderboard2_coarse_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614314": {
         //R2_Fine
@@ -87,7 +87,7 @@ expression: |
         docker_param_directory: "/home/aelamb/leaderboard2_fine_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614315": {
         //R3_Coarse
@@ -96,7 +96,7 @@ expression: |
         docker_param_directory: "/home/aelamb/leaderboard3_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614316": {
         //R3_Fine
@@ -105,7 +105,7 @@ expression: |
         docker_param_directory: "/home/aelamb/leaderboard3_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614317": {
         //Final_Coarse
@@ -114,7 +114,7 @@ expression: |
         docker_param_directory: "/home/ubuntu/validation_coarse_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        },
       "9614318": {
         //Final_Fine
@@ -123,7 +123,7 @@ expression: |
         docker_param_directory: "/home/ubuntu/validation_fine_dir",
         score_submission: true,
         cores: 8,
-        ram: 30000
+        ram: 3000
        }
     };
     return(dict[inputs.evaluationid])
