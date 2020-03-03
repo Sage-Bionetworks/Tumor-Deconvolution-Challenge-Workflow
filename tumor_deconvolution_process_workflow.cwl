@@ -84,6 +84,8 @@ steps:
       source: download_goldstandard/filepath
     - id: score_submission
       source: get_evaluation_parameters/score_submission
+    - id: fail_missing
+      valueFrom: "true"
     out:
     - id: annotation_json
     - id: status

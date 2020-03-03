@@ -31,6 +31,12 @@ inputs:
   inputBinding:
     prefix: --score_submission
 
+- id: fail_missing
+  type: boolean
+  default: false
+  inputBinding:
+    prefix: --fail_missing
+
 outputs:
 
 - id: annotation_json

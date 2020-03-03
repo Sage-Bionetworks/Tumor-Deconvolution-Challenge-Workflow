@@ -2,33 +2,26 @@ library(magrittr)
 library(dplyr)
 library(readr)
 
-source("/usr/local/bin/validation_functions.R")
-source("/usr/local/bin/scoring_functions.R")
-# source("validation_functions.R")
-# source("scoring_functions.R")
-# validation_file <- "/home/aelamb/repos/Tumor-Deconvolution-Challenge-Workflow/example_files/example_gold_standard/fast_lane_course.csv"
-# submission_file = "/home/aelamb/Downloads/9688261.csv"
-# score_submission = T
-
-
-######
+try(source("/usr/local/bin/validation_functions.R"))
+try(source("/usr/local/bin/scoring_functions.R"))
 
 process_submission_file <- function(
     submission_file, 
     validation_file, 
-    score_submission = F
+    score_submission = F,
+    fail_missing = T
 ){
     result <- list(
         "status" = "",
         "reason" = "",
         "annotations" = ""
     )
-    validation_df <- read_csv(validation_file)
+    validation_df <- readr::read_csv(validation_file)
     read_submission_result <- try(
         readr::read_csv(submission_file), 
         silent = TRUE
     )
-    if(inherits(read_submission_result, 'try-error')){
+    if ( inherits(read_submission_result, 'try-error')) {
         result$status <- "INVALID"
         result$reason = read_submission_result
         submission_df <- NULL
@@ -36,22 +29,24 @@ process_submission_file <- function(
         submission_df <- read_submission_result
     }
     
-    if(result$status != "INVALID"){
+    if (result$status != "INVALID") {
         validate_submission_result <- tryCatch(
             validate_submission(
                 submission_df, 
                 validation_df, 
-                key_cols = c("cell.type", "dataset.name", "sample.id")),
+                key_cols = c("cell.type", "dataset.name", "sample.id"),
+                fail_missing = fail_missing
+            ),
             validation_error = function(e) e$message
         )
-        if(is.null(validate_submission_result)){
+        if (is.null(validate_submission_result)) {
             result$status <- "VALIDATED"
         } else {
             result$status <- "INVALID"
             result$reason = validate_submission_result
         }
     }
-    if(all(result$status == "VALIDATED", score_submission)){
+    if (all(result$status == "VALIDATED", score_submission)) {
         result$status <- "SCORED"
         result$annotations <- create_score_annotations(
             submission_df, 
@@ -59,3 +54,4 @@ process_submission_file <- function(
     }
     return(result)
 }
+

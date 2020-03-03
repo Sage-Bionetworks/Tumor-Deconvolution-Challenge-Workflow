@@ -58,7 +58,7 @@ steps:
       - id: cores
       - id: ram
 
-  get_docker_submission:
+  - id: get_docker_submission
     run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/get_submission.cwl
     in:
       - id: submissionid
@@ -183,6 +183,8 @@ steps:
       source: download_goldstandard/filepath
     - id: score_submission
       source: get_evaluation_parameters/score_submission
+    - id: fail_missing
+      valueFrom: "false"
     out:
     - id: annotation_json
     - id: status

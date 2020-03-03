@@ -4,6 +4,52 @@ library(stringr)
 source("validation_functions.R")
 context("Validation functions")
 
+test_that("validate_submission", {
+    correct_prediction_tbl <- readr::read_csv(
+        "../../../example_files/output_example/predictions.csv"
+    )
+    incorrect_prediction_tbl1 <- readr::read_csv(
+        "../../../example_files/incorrect_output_examples/extra_predictions.csv"
+    )
+    incorrect_prediction_tbl2 <- readr::read_csv(
+        "../../../example_files/incorrect_output_examples/missing_predictions.csv"
+    )
+    gold_standard_tbl <- readr::read_csv(
+        "../../../example_files/example_gold_standard/fast_lane_course.csv"
+    )
+    key_cols <- c("cell.type", "dataset.name", "sample.id")
+    expect_null(
+        validate_submission(correct_prediction_tbl, gold_standard_tbl, key_cols)
+    )
+    expect_error(
+        validate_submission(
+            incorrect_prediction_tbl1, gold_standard_tbl, key_cols
+        ),
+    )
+    expect_error(
+        validate_submission(
+            incorrect_prediction_tbl2, gold_standard_tbl, key_cols
+        ),
+    )
+    expect_error(
+        validate_submission(
+            incorrect_prediction_tbl1, 
+            gold_standard_tbl, 
+            key_cols, 
+            fail_missing = F
+        ),
+    )
+    expect_null(
+        validate_submission(
+            incorrect_prediction_tbl2, 
+            gold_standard_tbl, 
+            key_cols, 
+            fail_missing = F
+        ),
+    )
+})
+
+
 test_that("prediction_df_rows_to_error_message",{
     df <- tibble::tribble(
         ~col1, ~col2,
@@ -30,30 +76,30 @@ test_that("values_to_list_string", {
         "[8, 9, 10]")
 })
 
-test_that("validate_correct_columns", {
-    correct_columns <- c("dataset.name", "sample.id")
-    df1 <- tibble::tribble(~dataset.name, ~sample.id)
-    df2 <- tibble::tribble(~sample.id, ~dataset.name)
-    df3 <- tibble::tribble(~dataset.name, ~sample.id, ~sample.id)
-    df4 <- tibble::tribble(~dataset.name)
-    df5 <- tibble::tribble(~dataset.name, ~sample_id)
-    df6 <- tibble::tribble(~dataset.name, ~dataset.name)
-
-    expect_null(validate_correct_columns(df1, correct_columns))
-    expect_null(validate_correct_columns(df2, correct_columns))
-    expect_s3_class(
-        catch_cnd(validate_correct_columns(df3, correct_columns)),
-        "error_incorrect_columns")
-    expect_s3_class(
-        catch_cnd(validate_correct_columns(df4, correct_columns)),
-        "error_incorrect_columns")
-    expect_s3_class(
-        catch_cnd(validate_correct_columns(df5, correct_columns)),
-        "error_incorrect_columns")
-    expect_s3_class(
-        catch_cnd(validate_correct_columns(df6, correct_columns)),
-        "error_incorrect_columns")
-})
+# test_that("validate_correct_columns", {
+#     correct_columns <- c("dataset.name", "sample.id")
+#     df1 <- tibble::tribble(~dataset.name, ~sample.id)
+#     df2 <- tibble::tribble(~sample.id, ~dataset.name)
+#     df3 <- tibble::tribble(~dataset.name, ~sample.id, ~sample.id)
+#     df4 <- tibble::tribble(~dataset.name)
+#     df5 <- tibble::tribble(~dataset.name, ~sample_id)
+#     df6 <- tibble::tribble(~dataset.name, ~dataset.name)
+# 
+#     expect_null(validate_correct_columns(df1, correct_columns))
+#     expect_null(validate_correct_columns(df2, correct_columns))
+#     expect_s3_class(
+#         catch_cnd(validate_correct_columns(df3, correct_columns)),
+#         "error_incorrect_columns")
+#     expect_s3_class(
+#         catch_cnd(validate_correct_columns(df4, correct_columns)),
+#         "error_incorrect_columns")
+#     expect_s3_class(
+#         catch_cnd(validate_correct_columns(df5, correct_columns)),
+#         "error_incorrect_columns")
+#     expect_s3_class(
+#         catch_cnd(validate_correct_columns(df6, correct_columns)),
+#         "error_incorrect_columns")
+# })
 
 test_that("create_column_names_message", {
     expect_equal(
@@ -65,29 +111,29 @@ test_that("create_column_names_message", {
     )
 })
 
-test_that("validate_complete_df", {
-    df <- tibble::tribble(
-        ~col1, ~col2,
-        "A", "C",
-        "B", NA
-    )
-    expect_null(validate_complete_df(df, "col1"))
-    expect_equal(
-        validate_complete_df(df, "col2"), 
-        "Prediction file contains NA values")
-})
+# test_that("validate_complete_df", {
+#     df <- tibble::tribble(
+#         ~col1, ~col2,
+#         "A", "C",
+#         "B", NA
+#     )
+#     expect_null(validate_complete_df(df, "col1"))
+#     expect_equal(
+#         validate_complete_df(df, "col2"), 
+#         "Prediction file contains NA values")
+# })
 
-test_that("validate_no_duplicates",{
-    df <- tibble::tribble(
-        ~col1, ~col2, 
-        "A", "C",
-        "B", "C"
-    )
-    expect_null(validate_no_duplicates(df, "col1"))
-    expect_equal(
-        validate_no_duplicates(df, "col2"),
-        "Prediction file contains duplicate predictions: [C].")
-})
+# test_that("validate_no_duplicates",{
+#     df <- tibble::tribble(
+#         ~col1, ~col2, 
+#         "A", "C",
+#         "B", "C"
+#     )
+#     expect_null(validate_no_duplicates(df, "col1"))
+#     expect_equal(
+#         validate_no_duplicates(df, "col2"),
+#         "Prediction file contains duplicate predictions: [C].")
+# })
 
 test_that("filter_column_for_duplicates",{
     df <- tibble::tribble(
@@ -102,6 +148,40 @@ test_that("filter_column_for_duplicates",{
         filter_column_for_duplicates(df),
         dplyr::tibble(key = "D"))
 })
+
+test_that("validate_combined_df", {
+    correct_prediction_tbl <- readr::read_csv(
+        "../../../example_files/output_example/predictions.csv"
+    )
+    incorrect_prediction_tbl1 <- readr::read_csv(
+        "../../../example_files/incorrect_output_examples/extra_predictions.csv"
+    )
+    incorrect_prediction_tbl2 <- readr::read_csv(
+        "../../../example_files/incorrect_output_examples/missing_predictions.csv"
+    )
+    gold_standard_tbl <- readr::read_csv(
+        "../../../example_files/example_gold_standard/fast_lane_course.csv"
+    )
+    expect_null(validate_combined_df(correct_prediction_tbl, gold_standard_tbl))
+    expect_error(
+        validate_combined_df(incorrect_prediction_tbl1, gold_standard_tbl),
+    )
+    expect_error(
+        validate_combined_df(incorrect_prediction_tbl2, gold_standard_tbl),
+    )
+    expect_error(
+        validate_combined_df(incorrect_prediction_tbl1, gold_standard_tbl, fail_missing = F),
+    )
+    expect_null(
+        validate_combined_df(incorrect_prediction_tbl2, gold_standard_tbl, fail_missing = F),
+    )
+})
+
+
+
+
+
+
 # 
 # test_that("filter_rows_by_func",{
 #     df <- tibble::tribble(

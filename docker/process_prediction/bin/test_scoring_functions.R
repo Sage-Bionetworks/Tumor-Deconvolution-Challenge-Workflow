@@ -2,50 +2,35 @@ library(testthat)
 library(tibble)
 library(stringr)
 source("scoring_functions.R")
-context("Scoring functions")
 
-VAL <- readr::read_csv( "../../../example_files/example_gold_standard/fast_lane_course.csv")
-SUB <- readr::read_csv("../../../example_files/example_submission/output/predictions.csv")
-COMB <- dplyr::inner_join(SUB, VAL)
 
-# test_that("score_submission",{
+VAL  <- readr::read_csv(
+    "../../../example_files/example_gold_standard/fast_lane_course.csv"
+)
+SUB1 <- readr::read_csv(
+    "../../../example_files/output_example/predictions.csv"
+)
+SUB2 <- readr::read_csv(
+    "../../../example_files/incorrect_output_examples/missing_fibroblasts.csv"
+)
+COMB1 <- dplyr::full_join(SUB1, VAL)
+COMB2 <- dplyr::full_join(SUB2, VAL)
 
-test_that("summarise_by_dataset",{
-    df <- COMB %>% 
-        summarise_by_cell_type() %>%
-        summarise_by_dataset()
-    expect_equal(df$median_pearson, rep(1, 2))
-    expect_equal(df$median_spearman, rep(1, 2))
+
+test_that("summarize_by_cell_type",{
+    res1 <- summarize_by_cell_type(COMB1)
+    expect_equal(res1$pearson, rep(1, 16))
+    expect_equal(res1$spearman, rep(1, 16))
+    res2 <- summarize_by_cell_type(COMB2)
+    expect_equal(tidyr::drop_na(res2)$pearson, rep(1, 14))
+    expect_equal(tidyr::drop_na(res2)$spearman, rep(1, 14))
 })
-
-
-test_that("summarise_by_cell_type",{
-    df <- summarise_by_cell_type(COMB)
-    expect_equal(df$pearson, rep(1, 16))
-    expect_equal(df$spearman, rep(1, 16))
-})
-
-test_that("summarise_by", {
-    df1 <- summarise_by(
-        SUB, 
-        avg = round(mean(prediction)), 
-        med = round(median(prediction)), 
-        group_cols = "dataset.name"
-    )
-    expect_equal(df1$avg, c(710, 498))
-    expect_equal(df1$med, c(243, 201))
-    df2 <- summarise_by(
-        SUB, 
-        max = round(max(prediction)), 
-        min = round(min(prediction)), 
-        group_cols = c("dataset.name", "sample.id")
-    )
-    expect_equal(df2$max, c(3756, 2810, 863, 3101, 1377))
-    expect_equal(df2$min, c(75, 41, 58, 102, 24))
-})
-
 
 test_that("score_correlation",{
+    expect_equal(
+        score_correlation(c(1,2,3), c(NA,NA,NA)),
+        NA
+    )
     expect_equal(
         score_correlation(c(1,2,3), c(4,5,6)),
         cor(c(1,2,3), c(4,5,6))

@@ -2,7 +2,7 @@ library(argparse)
 library(rjson)
 
 source("/usr/local/bin/process_submission_file.R")
-#source("process_submission_file.R")
+# source("docker/process_prediction/bin/process_submission_file.R")
 
 parser = ArgumentParser()
 
@@ -21,17 +21,24 @@ parser$add_argument(
     action = "store_true"
 )
 
+parser$add_argument(
+    "--fail_missing",
+    action = "store_true"
+)
+
 args <- parser$parse_args()
 # args <- list(
-#     validation_file = "lb_coarse_r1.csv",
-#     submission_file = "predictions.csv",
-#     score_submission = T
+#     validation_file = "example_files/example_gold_standard/fast_lane_course.csv",
+#     submission_file = "/home/aelamb/Downloads/9688261.csv",
+#     score_submission = T,
+#     fail_missing = T
 # )
 
 result <- process_submission_file(
     args$submission_file,
     args$validation_file, 
-    args$score_submission
+    args$score_submission,
+    args$fail_missing
 )
 
 annotation_json <- 
@@ -40,15 +47,16 @@ annotation_json <-
         "validation_error" = result$reason
     ) %>%  
     c(result$annotations) %>% 
-    rjson::toJSON() %>% 
+    rjson::toJSON(.) %>% 
     write("annotation.json")
 
-if (result$annotations == ""){
+if (length(result$annotations) > 1 && result$annotations != "") {
     result_list <- list(
         "status" = result$status,
         "invalid_reason_string" = result$reason,
         "annotation_string" =  result$annotations %>% 
             purrr::keep(stringr::str_detect(names(.), "rounded")) %>% 
+            purrr::discard(., is.na(.)) %>% 
             purrr::keep(stringr::str_detect(
                 names(.),
                 "[:print:]+_[:print:]+_[:print:]+_[:print:]+"
@@ -61,6 +69,7 @@ if (result$annotations == ""){
             stringr::str_c(collapse = ";")
     )
 } else {
+    print("test2")
     result_list <- list(
         "status" = result$status,
         "invalid_reason_string" = result$reason,
@@ -69,6 +78,6 @@ if (result$annotations == ""){
 }
 
 result_list %>%  
-    rjson::toJSON() %>% 
+    rjson::toJSON(.) %>% 
     write("results.json")
 

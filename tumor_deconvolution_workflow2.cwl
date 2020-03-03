@@ -12,10 +12,13 @@ inputs:
     type: int
   - id: adminUploadSynId
     type: string
+    default: "syn21576615"
   - id: submitterUploadSynId
     type: string
+    default: "syn21576615"
   - id: workflowSynapseId
     type: string
+    default: ""
   - id: synapseConfig
     type: File
 
@@ -46,7 +49,7 @@ steps:
       - id: name
 
   - id: get_evaluation_parameters
-    run: get_evaluation_parameters.cwl
+    run: get_evaluation_parameters2.cwl
     in:
       - id: evaluationid
         source: get_submission_attributes/evaluationid
