@@ -2,3 +2,5 @@
 .Rhistory
 .RData
 .Ruserdata
+leaderboard1_dir/*
+leaderboard1_coarse_dir/*

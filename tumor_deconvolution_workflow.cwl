@@ -95,9 +95,9 @@ steps:
       - id: annotation_values
         source: validate_docker/results
       - id: to_public
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: force_change_annotation_acl
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: synapse_config
         source: synapseConfig
     out: []
@@ -184,7 +184,7 @@ steps:
     - id: score_submission
       source: get_evaluation_parameters/score_submission
     - id: fail_missing
-      valueFrom: "false"
+      valueFrom: $(false)
     out:
     - id: annotation_json
     - id: status
@@ -199,9 +199,9 @@ steps:
       - id: annotation_values
         source: process_prediction_file/annotation_json
       - id: to_public
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: force_change_annotation_acl
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: synapse_config
         source: synapseConfig
     out: []
