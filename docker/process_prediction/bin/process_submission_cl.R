@@ -50,7 +50,7 @@ annotation_json <-
     rjson::toJSON(.) %>% 
     write("annotation.json")
 
-if (length(result$annotations) > 1 && result$annotations != "") {
+if (length(result$annotations) > 1) {
     result_list <- list(
         "status" = result$status,
         "invalid_reason_string" = result$reason,
@@ -69,7 +69,6 @@ if (length(result$annotations) > 1 && result$annotations != "") {
             stringr::str_c(collapse = ";")
     )
 } else {
-    print("test2")
     result_list <- list(
         "status" = result$status,
         "invalid_reason_string" = result$reason,
