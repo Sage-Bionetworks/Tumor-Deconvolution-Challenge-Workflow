@@ -16,7 +16,12 @@ inputs:
     type: string
 
 
-outputs: []
+outputs:
+ 
+- id: file
+  type: File
+  outputSource: process_prediction_file/annotation_json
+  
 
 steps:
 
@@ -76,7 +81,7 @@ steps:
     - id: filepath
 
   - id: process_prediction_file
-    run: process_prediction_file.cwl
+    run: process_prediction_file2.cwl
     in: 
     - id: submission_file
       source: download_submission/filepath
@@ -85,24 +90,21 @@ steps:
     - id: score_submission
       source: get_evaluation_parameters/score_submission
     - id: fail_missing
-      valueFrom: "true"
+      valueFrom: $(false)
     out:
     - id: annotation_json
-    - id: status
-    - id: annotation_string
-    - id: invalid_reason_string
 
   - id: annotate_submission
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submission.cwl
     in:
       - id: submissionid
         source: submissionId
       - id: annotation_values
         source: process_prediction_file/annotation_json
       - id: to_public
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: force_change_annotation_acl
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: synapse_config
         source: synapseConfig
     out: []

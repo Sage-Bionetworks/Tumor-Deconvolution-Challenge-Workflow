@@ -110,8 +110,8 @@ expression: |
       "9614317": {
         //Final_Coarse
         gold_standard_id: "syn21647567",
-        docker_input_directory: "/home/ubuntu/validation_dir",
-        docker_param_directory: "/home/ubuntu/validation_coarse_dir",
+        docker_input_directory: "/home/ubuntu/validation_coarse_dir",
+        docker_param_directory: "/home/ubuntu/validation_coarse_param_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
@@ -119,8 +119,8 @@ expression: |
       "9614318": {
         //Final_Fine
         gold_standard_id: "syn21647566",
-        docker_input_directory: "/home/ubuntu/validation_dir",
-        docker_param_directory: "/home/ubuntu/validation_fine_dir",
+        docker_input_directory: "/home/ubuntu/validation_fine_dir",
+        docker_param_directory: "/home/ubuntu/validation_fine_param_dir",
         score_submission: true,
         cores: 8,
         ram: 30000
