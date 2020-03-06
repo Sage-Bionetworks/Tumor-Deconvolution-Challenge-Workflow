@@ -33,13 +33,25 @@ prediction_df_rows_to_error_message <- function(
     df,
     key = "key",
     message_prefix = "",
-    message_suffix = "."){
+    message_suffix = "."
+){
     
     if (nrow(df) == 0) return(NA)
-    df %>%
-        dplyr::pull(key) %>%
-        values_to_list_string %>% 
-        stringr::str_c(message_prefix, ., message_suffix)
+    if (nrow(df) > 30) {
+        message <- df %>%
+            dplyr::slice(1:30) %>% 
+            dplyr::pull(key) %>%
+            values_to_list_string %>% 
+            stringr::str_c(message_prefix, "First 30 : ", ., message_suffix)
+        return(message)
+    } else {
+        message <- df %>%
+            dplyr::pull(key) %>%
+            values_to_list_string %>% 
+            stringr::str_c(message_prefix, ., message_suffix)
+        return(message)
+    }
+    
 }
 
 values_to_list_string <- function(values, sep = ", "){
