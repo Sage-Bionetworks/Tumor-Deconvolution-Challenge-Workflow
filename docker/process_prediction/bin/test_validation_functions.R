@@ -56,12 +56,22 @@ test_that("prediction_df_rows_to_error_message",{
         "A", 1,
         "C", 2
     )
+    df2 <- tibble::tibble(
+        col1 = 1:50
+    )
     expect_equal(
         prediction_df_rows_to_error_message(df, "col1", "Incorrect rows: "),
         "Incorrect rows: [A, C].")
     expect_equal(
         prediction_df_rows_to_error_message(df, "col2", "Incorrect values: "),
         "Incorrect values: [1, 2].")
+    expect_equal(
+        prediction_df_rows_to_error_message(df2, "col1", "Incorrect values: "),
+        paste0(
+            "Incorrect values: First 30: ", 
+            values_to_list_string(1:30), "."
+        )
+    )
 })
 
 test_that("values_to_list_string", {

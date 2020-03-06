@@ -42,7 +42,7 @@ prediction_df_rows_to_error_message <- function(
             dplyr::slice(1:30) %>% 
             dplyr::pull(key) %>%
             values_to_list_string %>% 
-            stringr::str_c(message_prefix, "First 30 : ", ., message_suffix)
+            stringr::str_c(message_prefix, "First 30: ", ., message_suffix)
         return(message)
     } else {
         message <- df %>%
