@@ -109,7 +109,7 @@ expression: |
        },
       "9614317": {
         //Final_Coarse
-        gold_standard_id: "syn21752552",
+        gold_standard_id: "syn21753897",
         docker_input_directory: "/home/ubuntu/validation_coarse_dir",
         docker_param_directory: "/home/ubuntu/validation_coarse_param_dir",
         score_submission: true,
@@ -118,7 +118,7 @@ expression: |
        },
       "9614318": {
         //Final_Fine
-        gold_standard_id: "syn21752551",
+        gold_standard_id: "syn21753896",
         docker_input_directory: "/home/ubuntu/validation_fine_dir",
         docker_param_directory: "/home/ubuntu/validation_fine_param_dir",
         score_submission: true,
