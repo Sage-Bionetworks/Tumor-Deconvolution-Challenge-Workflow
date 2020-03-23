@@ -46,7 +46,6 @@ test_that("process_submission_file", {
     )
     expect_equal(result3$annotations, "")
     
-    print(result4)
     expect_equal(result4$status, "INVALID")
     expect_equal(
         result4$reason,

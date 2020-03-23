@@ -17,11 +17,11 @@ COMB1 <- dplyr::full_join(SUB1, VAL)
 COMB2 <- dplyr::full_join(SUB2, VAL)
 
 
-test_that("summarize_by_cell_type",{
-    res1 <- summarize_by_cell_type(COMB1)
+test_that("summarize_by_dataset_and_cell_type",{
+    res1 <- summarize_by_dataset_and_cell_type(COMB1)
     expect_equal(res1$pearson, rep(1, 16))
     expect_equal(res1$spearman, rep(1, 16))
-    res2 <- summarize_by_cell_type(COMB2)
+    res2 <- summarize_by_dataset_and_cell_type(COMB2)
     expect_equal(tidyr::drop_na(res2)$pearson, rep(1, 14))
     expect_equal(tidyr::drop_na(res2)$spearman, rep(1, 14))
 })

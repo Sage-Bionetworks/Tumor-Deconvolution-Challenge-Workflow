@@ -12,7 +12,6 @@ validate_submission <- function(
     meas_col = "measured",
     fail_missing = T
 ){
-    
     validate_correct_columns(submission_df, c(key_cols, pred_col))
     validate_complete_df(submission_df, key_cols)
     submission_df2 <- submission_df %>%
@@ -139,7 +138,6 @@ validate_prediction_column_complete <- function(df){
         "nan" = "Prediction file contains NaN values: ",
         "inf" = "Prediction file contains Inf values: "
     )
-    
     message <- 
         purrr::map2(
             func_list, 
@@ -148,8 +146,7 @@ validate_prediction_column_complete <- function(df){
         ) %>% 
         purrr::discard(., purrr::map_lgl(., is.na)) %>% 
         stringr::str_c(collapse = " ")
-    
-    if (length(message) > 0) {
+    if (length(message) > 0 && message != "") {
         rlang::abort(
             "validation_error",
             message = message
@@ -202,7 +199,7 @@ validate_combined_df <- function(sub_df, val_df, fail_missing = T){
             purrr::discard(., purrr::map_lgl(., is.na)) %>% 
             stringr::str_c(collapse = " ")
     }
-    if (length(message) > 0) {
+    if (length(message) > 0 && message != "") {
         rlang::abort(
             "validation_error",
             message = message
