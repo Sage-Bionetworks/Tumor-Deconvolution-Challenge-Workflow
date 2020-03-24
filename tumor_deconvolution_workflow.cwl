@@ -59,7 +59,7 @@ steps:
       - id: ram
 
   - id: get_docker_submission
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/get_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/get_submission.cwl
     in:
       - id: submissionid
         source: submissionId
@@ -74,7 +74,7 @@ steps:
       - id: results
 
   - id: validate_docker
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/validate_docker.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/validate_docker.cwl
     in:
       - id: docker_repository
         source: get_docker_submission/docker_repository
@@ -88,7 +88,7 @@ steps:
       - id: invalid_reasons
 
   - id: annotate_docker_validation_with_output
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/annotate_submission.cwl
     in:
       - id: submissionid
         source: submissionId
@@ -103,7 +103,7 @@ steps:
     out: []
 
   - id: get_docker_config
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/get_docker_config.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/get_docker_config.cwl
     in:
       - id: synapse_config
         source: synapseConfig
@@ -192,7 +192,7 @@ steps:
     - id: invalid_reason_string
 
   - id: annotate_submission
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.4/annotate_submission.cwl
     in:
       - id: submissionid
         source: submissionId
