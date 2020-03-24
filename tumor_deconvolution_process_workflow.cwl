@@ -48,7 +48,7 @@ steps:
       - id: name
 
   - id: get_evaluation_parameters
-    run: get_evaluation_parameters.cwl
+    run: get_evaluation_parameters2.cwl
     in:
       - id: evaluationid
         source: get_submission_attributes/evaluationid
@@ -94,20 +94,22 @@ steps:
     out:
     - id: annotation_json
 
-  - id: annotate_submission
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submission.cwl
-    in:
-      - id: submissionid
-        source: submissionId
-      - id: annotation_values
-        source: process_prediction_file/annotation_json
-      - id: to_public
-        valueFrom: $(true)
-      - id: force_change_annotation_acl
-        valueFrom: $(true)
-      - id: synapse_config
-        source: synapseConfig
-    out: []
+#  - id: annotate_submission
+#    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submissio#n.cwl
+#    in:
+#      - id: submissionid
+#        source: submissionId
+#      - id: annotation_values
+#        source: process_prediction_file/annotation_json
+#      - id: to_public
+#        valueFrom: $(true)
+#      - id: force_change_annotation_acl
+#        valueFrom: $(true)
+#      - id: synapse_config
+#        source: synapseConfig
+#    out: []
+    
+
 
 
 

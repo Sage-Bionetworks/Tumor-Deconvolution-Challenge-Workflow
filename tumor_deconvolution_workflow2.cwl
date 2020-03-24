@@ -12,13 +12,10 @@ inputs:
     type: int
   - id: adminUploadSynId
     type: string
-    default: "syn21576615"
   - id: submitterUploadSynId
     type: string
-    default: "syn21576615"
   - id: workflowSynapseId
     type: string
-    default: ""
   - id: synapseConfig
     type: File
 
@@ -62,19 +59,22 @@ steps:
       - id: ram
 
   - id: get_docker_submission
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/get_submission_docker.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/get_submission.cwl
     in:
       - id: submissionid
         source: submissionId
       - id: synapse_config
         source: synapseConfig
     out:
+      - id: filepath
       - id: docker_repository
       - id: docker_digest
-      - id: entityid
+      - id: entity_id
+      - id: entity_type
+      - id: results
 
   - id: validate_docker
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/validate_docker.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/validate_docker.cwl
     in:
       - id: docker_repository
         source: get_docker_submission/docker_repository
@@ -88,22 +88,22 @@ steps:
       - id: invalid_reasons
 
   - id: annotate_docker_validation_with_output
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/annotate_submission.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submission.cwl
     in:
       - id: submissionid
         source: submissionId
       - id: annotation_values
         source: validate_docker/results
       - id: to_public
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: force_change_annotation_acl
-        valueFrom: "true"
+        valueFrom: $(true)
       - id: synapse_config
         source: synapseConfig
     out: []
 
   - id: get_docker_config
-    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v1.5/get_docker_config.cwl
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/get_docker_config.cwl
     in:
       - id: synapse_config
         source: synapseConfig
@@ -162,5 +162,79 @@ steps:
       source: rename_prediction_file/output_file
     - id: parentid
       valueFrom: "syn19518404"
+    out: []
+
+  - id: download_goldstandard
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/synapse-client-cwl-tools/v0.1/synapse-get-tool.cwl
+    in:
+    - id: synapseid
+      source: get_evaluation_parameters/gold_standard_id
+    - id: synapse_config
+      source: synapseConfig
+    out:
+    - id: filepath
+
+  - id: process_prediction_file
+    run: process_prediction_file.cwl
+    in: 
+    - id: submission_file
+      source: run_docker/predictions
+    - id: validation_file
+      source: download_goldstandard/filepath
+    - id: score_submission
+      source: get_evaluation_parameters/score_submission
+    - id: fail_missing
+      valueFrom: $(false)
+    out:
+    - id: annotation_json
+    - id: status
+    - id: annotation_string
+    - id: invalid_reason_string
+
+  - id: annotate_submission
+    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submission.cwl
+    in:
+      - id: submissionid
+        source: submissionId
+      - id: annotation_values
+        source: process_prediction_file/annotation_json
+      - id: to_public
+        valueFrom: $(true)
+      - id: force_change_annotation_acl
+        valueFrom: $(true)
+      - id: synapse_config
+        source: synapseConfig
+    out: []
+
+  - id: create_email_message
+    run: create_email_message.cwl
+    in:  
+    - id: status
+      source: process_prediction_file/status
+    - id: evaluation_name
+      source: get_evaluation_attributes/name
+    - id: submissionid
+      source: submissionId
+    - id: submission_name
+      source: get_submission_attributes/name
+    - id: invalid_reason_string
+      source: process_prediction_file/invalid_reason_string
+    - id: annotation_string
+      source: process_prediction_file/annotation_string
+    out: 
+    - id: subject
+    - id: body
+
+  - id: send_message
+    run: send_message.cwl
+    in:  
+    - id: synapse_config
+      source: synapseConfig
+    - id: userid
+      source: get_submission_attributes/userid
+    - id: body
+      source: create_email_message/body
+    - id: subject
+      source: create_email_message/subject
     out: []
 
