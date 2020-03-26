@@ -29,7 +29,7 @@ parser$add_argument(
 args <- parser$parse_args()
 # args <- list(
 #     validation_file = "example_files/example_gold_standard/fast_lane_course.csv",
-#     submission_file = "/home/aelamb/Downloads/9688261.csv",
+#     submission_file = "example_files/output_example/predictions.csv",
 #     score_submission = T,
 #     fail_missing = T
 # )
@@ -56,11 +56,7 @@ if (length(result$annotations) > 1) {
         "invalid_reason_string" = result$reason,
         "annotation_string" =  result$annotations %>% 
             purrr::keep(stringr::str_detect(names(.), "rounded")) %>% 
-            purrr::discard(., is.na(.)) %>% 
-            purrr::keep(stringr::str_detect(
-                names(.),
-                "[:print:]+_[:print:]+_[:print:]+_[:print:]+"
-            )) %>% 
+            purrr::discard(., is.na(.)) %>%
             magrittr::set_names(stringr::str_remove_all(
                 names(.),
                 "_rounded"
