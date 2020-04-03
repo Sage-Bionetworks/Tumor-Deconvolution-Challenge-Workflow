@@ -43,6 +43,11 @@ outputs:
   type: File
   outputBinding:
     glob: "annotation.json"
+    
+- id: results_json
+  type: File
+  outputBinding:
+    glob: "results.json"
 
 - id: status
   type: string
