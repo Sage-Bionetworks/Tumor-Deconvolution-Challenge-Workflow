@@ -22,6 +22,22 @@ outputs:
   type: File
   outputSource: process_prediction_file/annotation_json
   
+- id: file2
+  type: File
+  outputSource: process_prediction_file/results_json
+  
+- id: status
+  type: string
+  outputSource: process_prediction_file/status
+
+- id: annotation_string
+  type: string
+  outputSource: process_prediction_file/annotation_string
+  
+- id: invalid_reason_string
+  type: string
+  outputSource: process_prediction_file/invalid_reason_string
+  
 
 steps:
 
@@ -48,7 +64,7 @@ steps:
       - id: name
 
   - id: get_evaluation_parameters
-    run: get_evaluation_parameters2.cwl
+    run: get_evaluation_parameters.cwl
     in:
       - id: evaluationid
         source: get_submission_attributes/evaluationid
@@ -81,7 +97,7 @@ steps:
     - id: filepath
 
   - id: process_prediction_file
-    run: process_prediction_file2.cwl
+    run: process_prediction_file.cwl
     in: 
     - id: submission_file
       source: download_submission/filepath
@@ -93,6 +109,10 @@ steps:
       valueFrom: $(false)
     out:
     - id: annotation_json
+    - id: results_json
+    - id: status
+    - id: annotation_string
+    - id: invalid_reason_string
 
 #  - id: annotate_submission
 #    run: https://raw.githubusercontent.com/Sage-Bionetworks/ChallengeWorkflowTemplates/v2.3/annotate_submissio#n.cwl
