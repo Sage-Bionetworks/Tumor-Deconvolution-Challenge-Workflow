@@ -4,17 +4,22 @@ library(stringr)
 source("scoring_functions.R")
 
 
-VAL  <- readr::read_csv(
+VAL1  <- readr::read_csv(
     "../../../example_files/example_gold_standard/fast_lane_course.csv"
 )
+VAL2  <- readr::read_csv(
+    "../../../example_files/example_gold_standard/fast_lane_course_missing_neutrophils.csv"
+)
+
 SUB1 <- readr::read_csv(
     "../../../example_files/output_example/predictions.csv"
 )
 SUB2 <- readr::read_csv(
     "../../../example_files/incorrect_output_examples/missing_fibroblasts.csv"
 )
-COMB1 <- dplyr::full_join(SUB1, VAL)
-COMB2 <- dplyr::full_join(SUB2, VAL)
+COMB1 <- dplyr::full_join(SUB1, VAL1)
+COMB2 <- dplyr::full_join(SUB2, VAL1)
+COMB3 <- dplyr::full_join(SUB1, VAL2)
 
 
 test_that("summarize_by_dataset_and_cell_type",{
@@ -24,6 +29,7 @@ test_that("summarize_by_dataset_and_cell_type",{
     res2 <- summarize_by_dataset_and_cell_type(COMB2)
     expect_equal(tidyr::drop_na(res2)$pearson, rep(1, 14))
     expect_equal(tidyr::drop_na(res2)$spearman, rep(1, 14))
+    res3 <- summarize_by_dataset_and_cell_type(COMB3)
 })
 
 test_that("score_correlation",{
