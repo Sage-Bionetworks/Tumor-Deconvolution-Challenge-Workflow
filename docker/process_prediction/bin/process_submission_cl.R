@@ -3,6 +3,8 @@ library(rjson)
 
 source("/usr/local/bin/process_submission_file.R")
 # source("docker/process_prediction/bin/process_submission_file.R")
+# source("docker/process_prediction/bin/scoring_functions.R")
+# source("docker/process_prediction/bin/validation_functions.R")
 
 parser = ArgumentParser()
 
@@ -28,7 +30,7 @@ parser$add_argument(
 
 args <- parser$parse_args()
 # args <- list(
-#     validation_file = "example_files/example_gold_standard/fast_lane_course.csv",
+#     validation_file = "example_files/example_gold_standard/fast_lane_course_missing_neutrophils.csv",
 #     submission_file = "example_files/output_example/predictions.csv",
 #     score_submission = T,
 #     fail_missing = T
