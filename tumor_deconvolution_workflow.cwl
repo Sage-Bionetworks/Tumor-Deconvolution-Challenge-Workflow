@@ -184,7 +184,7 @@ steps:
     - id: score_submission
       source: get_evaluation_parameters/score_submission
     - id: fail_missing
-      valueFrom: $(true)
+      valueFrom: $(false)
     out:
     - id: annotation_json
     - id: status
