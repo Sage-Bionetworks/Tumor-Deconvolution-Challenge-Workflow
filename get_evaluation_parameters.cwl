@@ -136,7 +136,7 @@ expression: |
        },
       "9614583": {
         //Post_Final_Fine
-        gold_standard_id: "syn21820376,
+        gold_standard_id: "syn21820376",
         docker_input_directory: "/home/ubuntu/validation_dir",
         docker_param_directory: "/home/ubuntu/validation_fine_param_dir",
         score_submission: true,
