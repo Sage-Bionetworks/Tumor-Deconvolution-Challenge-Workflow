@@ -143,6 +143,24 @@ expression: |
         cores: 8,
         ram: 30000
        }
+      "9614614": {
+        //Post_Final_Coarse2
+        gold_standard_id: "syn21752552",
+        docker_input_directory: "/home/ubuntu/validation_dir",
+        docker_param_directory: "/home/ubuntu/validation_coarse_param_dir",
+        score_submission: true,
+        cores: 8,
+        ram: 30000
+       },
+      "9614615": {
+        //Post_Final_Fine2
+        gold_standard_id: "syn21752551",
+        docker_input_directory: "/home/ubuntu/validation_dir",
+        docker_param_directory: "/home/ubuntu/validation_fine_param_dir",
+        score_submission: true,
+        cores: 8,
+        ram: 30000
+       }
     };
     return(dict[inputs.evaluationid])
   }
