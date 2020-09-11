@@ -142,7 +142,7 @@ expression: |
         score_submission: true,
         cores: 8,
         ram: 30000
-       }
+       },
       "9614614": {
         //Post_Final_Coarse2
         gold_standard_id: "syn21752552",
